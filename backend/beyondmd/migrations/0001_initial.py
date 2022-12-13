@@ -17,11 +17,11 @@ class Migration(migrations.Migration):
             name='Exercise',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(default='test', max_length=30)),
-                ('type', models.CharField(default='test', max_length=30)),
-                ('muscle', models.CharField(default='test', max_length=20)),
-                ('difficulty', models.CharField(default='test', max_length=10)),
-                ('instructions', models.TextField(default='test')),
+                ('name', models.CharField(max_length=30)),
+                ('exercise_type', models.CharField(max_length=30)),
+                ('muscle', models.CharField(max_length=20)),
+                ('difficulty', models.CharField(max_length=10)),
+                ('instructions', models.TextField()),
             ],
         ),
         migrations.CreateModel(

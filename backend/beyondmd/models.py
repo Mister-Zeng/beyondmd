@@ -5,11 +5,11 @@ from django.utils import timezone
 # Create your models here.
 class Exercise(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=30, default="test")
-    type = models.CharField(max_length=30, default="test")
-    muscle = models.CharField(max_length=20, default="test")
-    difficulty = models.CharField(max_length=10, default="test")
-    instructions = models.TextField(default="test")
+    name = models.CharField(max_length=30)
+    exercise_type = models.CharField(max_length=30)
+    muscle = models.CharField(max_length=20)
+    difficulty = models.CharField(max_length=10)
+    instructions = models.TextField()
 
 
 class Reviewer(models.Model):
