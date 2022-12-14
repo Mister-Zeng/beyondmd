@@ -1,12 +1,20 @@
 import { Typography, Button, Box, TextField, Rating } from "@mui/material";
 import React, { FC } from "react";
+import type { ReviewerPropsType } from "../../types/ReviewerType";
 
-type ReviewerPropsType = {
-  firstName: string;
-  lastName: string;
-  exercise: string;
-  rating: number | null;
-  comment: string;
+const styles = {
+  container: {
+    display: "flex",
+    alignItems: "center",
+    padding: 1,
+  },
+  textStyle: {
+    width: 100,
+    color: "#E8EDDF",
+  },
+  textInput: {
+    width: 200,
+  },
 };
 
 const ReviewForm: FC = () => {
@@ -18,70 +26,62 @@ const ReviewForm: FC = () => {
     comment: "",
   });
 
-  const styles = {
-    container: {
-      display: "flex",
-      alignItems: "center",
-      padding: 1,
-    },
-    textStyle: {
-      width: 120,
-      color: "#E8EDDF",
-    },
-    textInput: {
-      width: 300,
-    },
-  };
   return (
-    <Box display={"flex"} flexDirection={"column"} width={350} border={1}>
-      <Box sx={styles.container}>
-        <Typography sx={styles.textStyle}>First Name:</Typography>
-        <TextField
-          id="firstName"
-          variant="outlined"
-          size="small"
-          sx={styles.textInput}
-          onChange={(event) => {
-            setReviewer({ ...reviewer, firstName: event.target.value });
-          }}
-        />
+    <Box display={"flex"} flexDirection={"column"} width={650}>
+      <Box display={"flex"} flexDirection={"row"}>
+        <Box sx={styles.container}>
+          <Typography sx={styles.textStyle}>First Name:</Typography>
+          <TextField
+            id="firstName"
+            variant="outlined"
+            size="small"
+            sx={styles.textInput}
+            onChange={(event) => {
+              setReviewer({ ...reviewer, firstName: event.target.value });
+            }}
+          />
+        </Box>
+
+        <Box sx={styles.container}>
+          <Typography sx={styles.textStyle}>Last Name:</Typography>
+          <TextField
+            id="lastName"
+            variant="outlined"
+            size="small"
+            sx={styles.textInput}
+            onChange={(event) => {
+              setReviewer({ ...reviewer, lastName: event.target.value });
+            }}
+          />
+        </Box>
       </Box>
 
       <Box sx={styles.container}>
-        <Typography sx={styles.textStyle}>Last Name:</Typography>
-        <TextField
-          id="lastName"
-          variant="outlined"
-          size="small"
-          sx={styles.textInput}
-          onChange={(event) => {
-            setReviewer({ ...reviewer, lastName: event.target.value });
-          }}
-        />
-      </Box>
+        <Box display={"flex"} flexDirection={"row"}>
+          <Typography sx={styles.textStyle}>Exercise:</Typography>
+          <TextField
+            id="exercise"
+            variant="outlined"
+            size="small"
+            sx={styles.textInput}
+            onChange={(event) => {
+              setReviewer({ ...reviewer, exercise: event.target.value });
+            }}
+          />
+        </Box>
 
-      <Box sx={styles.container}>
-        <Typography sx={styles.textStyle}>Exercise:</Typography>
-        <TextField
-          id="exercise"
-          variant="outlined"
-          size="small"
-          sx={styles.textInput}
-          onChange={(event) => {
-            setReviewer({ ...reviewer, exercise: event.target.value });
-          }}
-        />
-      </Box>
-
-      <Box sx={styles.container}>
-        <Typography sx={styles.textStyle}>Rating:</Typography>
-        <Rating
-          name="exercise rating"
-          value={reviewer.rating}
-          onChange={(event, newValue) => {
-            setReviewer({ ...reviewer, rating: newValue });
-          }}
-        />
+        <Box sx={styles.container}>
+          <Typography sx={[styles.textStyle, { marginLeft: 1 }]}>
+            Rating:
+          </Typography>
+          <Rating
+            name="exercise rating"
+            value={reviewer.rating}
+            onChange={(event, newValue) => {
+              setReviewer({ ...reviewer, rating: newValue });
+            }}
+          />
+        </Box>
       </Box>
 
       <Box sx={styles.container}>
@@ -90,9 +90,9 @@ const ReviewForm: FC = () => {
           id="comment"
           variant="outlined"
           size="medium"
-          minRows={6}
+          minRows={3}
           multiline={true}
-          sx={styles.textInput}
+          sx={{ width: "80%" }}
           onChange={(event) => {
             setReviewer({ ...reviewer, comment: event.target.value });
           }}

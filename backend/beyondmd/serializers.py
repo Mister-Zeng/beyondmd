@@ -25,10 +25,10 @@ class ReviewerSerializer(serializers.Serializer):
         instance.save()
         return instance
 
-    def delete(self, request, pk):
+    def delete(self, pk):
         reviewer = Reviewer.objects.get(pk=pk)
         serializer = ReviewerSerializer(reviewer)
-        serializer.delete(reviewer)
+        serializer.delete()
         return Response(status=204)
 
 

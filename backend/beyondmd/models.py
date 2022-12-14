@@ -5,7 +5,7 @@ from django.utils import timezone
 # Create your models here.
 class Exercise(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50, unique=True)
     exercise_type = models.CharField(max_length=30)
     muscle = models.CharField(max_length=20)
     difficulty = models.CharField(max_length=10)
