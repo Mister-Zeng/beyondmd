@@ -7,7 +7,7 @@ from .models import Reviewer, Exercise
 @admin.register(Exercise)
 class ExerciseModel(admin.ModelAdmin):
     list_filter = ("exercise_type", "muscle", "difficulty")
-    list_display = ("id", "name", "exercise_type", "muscle", "difficulty", "instructions")
+    list_display = ("id", "name", "exercise_type", "muscle", "equipment", "difficulty", "instructions")
 
 
 admin.site.register(Reviewer)

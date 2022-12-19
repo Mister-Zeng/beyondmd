@@ -8,7 +8,8 @@ class Exercise(models.Model):
     name = models.CharField(max_length=50, unique=True)
     exercise_type = models.CharField(max_length=30)
     muscle = models.CharField(max_length=20)
-    difficulty = models.CharField(max_length=10)
+    equipment = models.CharField(max_length=30)
+    difficulty = models.CharField(max_length=20)
     instructions = models.TextField()
 
 

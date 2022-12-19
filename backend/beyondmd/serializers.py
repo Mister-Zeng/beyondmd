@@ -7,10 +7,10 @@ from rest_framework.response import Response
 from .models import Reviewer, Exercise
 
 
-class ReviewerSerializer(serializers.Serializer):
+class ReviewerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reviewer
-        fields = ['__all__']
+        fields = ['first_name', 'last_name', 'rating', 'comment', 'posted', 'exercise_id']
 
     def create(self, validated_data):
         return Reviewer.objects.create(validated_data)
@@ -25,32 +25,21 @@ class ReviewerSerializer(serializers.Serializer):
         instance.save()
         return instance
 
-    def delete(self, pk):
-        reviewer = Reviewer.objects.get(pk=pk)
-        serializer = ReviewerSerializer(reviewer)
-        serializer.delete()
-        return Response(status=204)
 
-
-class ExerciseSerializer(serializers.Serializer):
+class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
-        fields = ['__all__']
+        fields = ['name', 'exercise_type', 'muscle', 'equipment', 'difficulty', 'instructions']
 
     def create(self, validated_data):
-        return Reviewer.objects.create(validated_data)
+        return Exercise.objects.create(validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
         instance.type = validated_data.get('type', instance.type)
         instance.muscle = validated_data.get('muscle', instance.muscle)
+        instance.equipment = validated_data.get('equipment', instance.equipment)
         instance.difficulty = validated_data.get('difficulty', instance.difficulty)
         instance.instructions = validated_data.get('instructions', instance.instructions)
         instance.save()
         return instance
-
-    def delete(self, request, pk):
-        exercise = Exercise.objects.get(pk=pk)
-        serializer = ExerciseSerializer(exercise)
-        serializer.delete(exercise)
-        return Response(status=204)
