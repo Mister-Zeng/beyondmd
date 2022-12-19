@@ -6,8 +6,7 @@ import SearchBar from "../../components/SearchBar";
 import Select from "react-select";
 import { typeList, muscleList, difficultyList } from "../../constant/exercise";
 import type { ExerciseSelectPropsType, ExerciseType } from "./MainScreen.type";
-import axios from "axios";
-import { useMediaPredicate } from "react-media-hook";
+import axios, { AxiosResponse } from "axios";
 
 const MainScreen: FC = () => {
   const [exerciseList, setExerciseList] = useState<ExerciseType[]>([]);
@@ -69,7 +68,7 @@ const MainScreen: FC = () => {
   useEffect(() => {
     const getExercises: () => Promise<void> = async () => {
       try {
-        const response = await axios.get("exercises/");
+        const response: AxiosResponse<any, any> = await axios.get("exercises/");
 
         const data: ExerciseType[] = response.data;
 
@@ -83,7 +82,22 @@ const MainScreen: FC = () => {
     getExercises();
   }, []);
 
-  const lessThan1080: boolean = useMediaPredicate("(max-width: 1080px)");
+  const styles = {
+    filterSelectBox: {
+      width: 200,
+      margin: "10px",
+      "@media only screen and (max-width: 1200px)": {
+        width: 100,
+      },
+    },
+    filterSelectText: {
+      color: "white",
+      width: "120px",
+      "@media only screen and (max-width: 600px)": {
+        fontSize: 14,
+      },
+    },
+  };
 
   return (
     <Box
@@ -94,6 +108,7 @@ const MainScreen: FC = () => {
         flexDirection: "column",
         alignItems: "center",
         minHeight: "100vh",
+        width: "100%",
       }}
     >
       <SearchBar
@@ -107,24 +122,25 @@ const MainScreen: FC = () => {
         flexDirection={"row"}
         alignItems={"center"}
         sx={{
-          "@media only screen and (max-width: 1200px)": {
+          marginBottom: 2,
+          "@media only screen and (max-width: 800px)": {
             flexDirection: "column",
           },
         }}
       >
         <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-          <Typography sx={{ color: "white", width: "120px" }}>
-            Exercise Type
-          </Typography>
+          <Typography sx={styles.filterSelectText}>Exercise Type</Typography>
           <Select
             options={typeList}
             styles={{
-              control: (baseStyles, state) => ({
+              control: (baseStyles) => ({
                 ...baseStyles,
-                width: 200,
-                margin: "10px",
-                "@media only screen and (max-width: 1200px)": {
-                  width: 100,
+                ...styles.filterSelectBox,
+              }),
+              valueContainer: (baseStyles) => ({
+                ...baseStyles,
+                "@media only screen and (max-width: 600px)": {
+                  fontSize: 14,
                 },
               }),
             }}
@@ -138,18 +154,18 @@ const MainScreen: FC = () => {
         </Box>
 
         <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-          <Typography sx={{ color: "white", width: "120px" }}>
-            Muscle Type
-          </Typography>
+          <Typography sx={styles.filterSelectText}>Muscle Type</Typography>
           <Select
             options={muscleList}
             styles={{
-              control: (baseStyles, state) => ({
+              control: (baseStyles) => ({
                 ...baseStyles,
-                width: 200,
-                margin: "10px",
-                "@media only screen and (max-width: 1200px)": {
-                  width: 100,
+                ...styles.filterSelectBox,
+              }),
+              valueContainer: (baseStyles) => ({
+                ...baseStyles,
+                "@media only screen and (max-width: 600px)": {
+                  fontSize: 14,
                 },
               }),
             }}
@@ -163,18 +179,18 @@ const MainScreen: FC = () => {
         </Box>
 
         <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-          <Typography sx={{ color: "white", width: "120px" }}>
-            Difficulty Level
-          </Typography>
+          <Typography sx={styles.filterSelectText}>Difficulty Level</Typography>
           <Select
             options={difficultyList}
             styles={{
-              control: (baseStyles, state) => ({
+              control: (baseStyles) => ({
                 ...baseStyles,
-                width: 200,
-                margin: "10px",
-                "@media only screen and (max-width: 1200px)": {
-                  width: 100,
+                ...styles.filterSelectBox,
+              }),
+              valueContainer: (baseStyles) => ({
+                ...baseStyles,
+                "@media only screen and (max-width: 600px)": {
+                  fontSize: 14,
                 },
               }),
             }}
@@ -190,20 +206,34 @@ const MainScreen: FC = () => {
         <Button
           variant="contained"
           size="small"
-          sx={{ height: 35, backgroundColor: "#F5CB5C", color: "#333533" }}
+          sx={{
+            height: 35,
+            backgroundColor: "#F5CB5C",
+            color: "#333533",
+            borderRadius: 5,
+            "@media only screen and (max-width: 1200px)": {
+              marginBottom: 1,
+            },
+            "@media only screen and (max-width: 600px)": {
+              width: 70,
+              height: 25,
+              fontSize: 11,
+            },
+          }}
           onClick={searchFilterHandler}
         >
           Search
         </Button>
       </Box>
 
-      <Box sx={{ width: "100%", minHeight: "100vh", marginBottom: 5 }}>
+      <Box sx={{ minHeight: "100vh", marginBottom: 5 }}>
         <ExerciseCardTitle />
 
         {filteredExerciseList.map((exercise, index) => {
           return (
             <ExerciseCard
               key={index}
+              id={exercise.id}
               exerciseName={exercise.name}
               exerciseType={exercise.exercise_type}
               muscleType={exercise.muscle}

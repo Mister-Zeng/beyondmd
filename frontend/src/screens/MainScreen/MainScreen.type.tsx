@@ -6,6 +6,7 @@ type ExerciseSelectPropsType = {
 };
 
 type ExerciseType = {
+  id: number;
   name: string;
   exercise_type: string;
   muscle: string;

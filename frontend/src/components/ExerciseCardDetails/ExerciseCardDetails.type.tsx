@@ -1,4 +1,4 @@
-type ExerciseCardProps = {
+type ExerciseCardDetailsPropsType = {
   id: number;
   exerciseName: string;
   exerciseType: string;
@@ -7,4 +7,4 @@ type ExerciseCardProps = {
   instructions: string;
 };
 
-export type { ExerciseCardProps };
+export type { ExerciseCardDetailsPropsType };

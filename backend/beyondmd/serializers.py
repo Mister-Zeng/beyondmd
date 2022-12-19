@@ -10,7 +10,7 @@ from .models import Reviewer, Exercise
 class ReviewerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reviewer
-        fields = ['first_name', 'last_name', 'rating', 'comment', 'posted', 'exercise_id']
+        fields = ['id', 'first_name', 'last_name', 'rating', 'comment', 'posted', 'exercise_id']
 
     def create(self, validated_data):
         return Reviewer.objects.create(validated_data)
@@ -29,14 +29,14 @@ class ReviewerSerializer(serializers.ModelSerializer):
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
-        fields = ['name', 'exercise_type', 'muscle', 'equipment', 'difficulty', 'instructions']
+        fields = ['id', 'name', 'exercise_type', 'muscle', 'equipment', 'difficulty', 'instructions']
 
     def create(self, validated_data):
         return Exercise.objects.create(validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
-        instance.type = validated_data.get('type', instance.type)
+        instance.exercise_type = validated_data.get('exercise_type', instance.type)
         instance.muscle = validated_data.get('muscle', instance.muscle)
         instance.equipment = validated_data.get('equipment', instance.equipment)
         instance.difficulty = validated_data.get('difficulty', instance.difficulty)

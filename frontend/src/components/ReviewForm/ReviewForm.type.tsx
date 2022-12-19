@@ -1,7 +1,7 @@
 type ReviewerPropsType = {
-  firstName: string;
-  lastName: string;
-  exercise: string;
+  first_name: string;
+  last_name: string;
+  exercise: number;
   rating: number | null;
   comment: string;
 };

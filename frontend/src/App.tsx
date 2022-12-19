@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainScreen />} />
         <Route path="resume" element={<ResumeScreen />} />
-        <Route path="exercise" element={<ExerciseScreen />} />
+        <Route path="exercise/:exerciseName" element={<ExerciseScreen />} />
       </Routes>
     </React.Fragment>
   );
