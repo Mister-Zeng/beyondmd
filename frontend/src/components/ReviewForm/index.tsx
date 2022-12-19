@@ -1,6 +1,6 @@
 import { Typography, Button, Box, TextField, Rating } from "@mui/material";
 import React, { FC } from "react";
-import type { ReviewerPropsType } from "../../types/ReviewerType";
+import type { ReviewerPropsType } from "./ReviewForm.type";
 
 const styles = {
   container: {

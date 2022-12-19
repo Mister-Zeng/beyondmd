@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import ReviewForm from "../../components/ReviewForm";
 import { Box, Typography } from "@mui/material";
-import type { ExerciseCardProps } from "../../types/ExerciseType";
 
 const ExerciseScreen: FC = () => {
   return (

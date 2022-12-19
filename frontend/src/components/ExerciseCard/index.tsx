@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Box, Typography } from "@mui/material";
-import type { ExerciseCardProps } from "../../types/ExerciseType";
+import type { ExerciseCardProps } from "./ExerciseCard.type";
 
 const styles = {
   exerciseContainer: {
