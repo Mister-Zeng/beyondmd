@@ -22,14 +22,15 @@ def exercise_view(request):
         exercise_type = ['cardio', 'olympic_weightlifting', 'plyometrics', 'powerlifting', 'strength', 'stretching',
                          'strongman']
 
-        for exercise in exercise_type:
+        for e in exercise_type:
+
             offset = 0
             while True:
                 response = requests.get('https://api.api-ninjas.com/v1/exercises',
                                         headers={'X-Api-Key': api_key},
-                                        params={'type': exercise, 'offset': offset})
+                                        params={'type': e, 'offset': offset})
                 datas = response.json()
-
+                print(len(datas), e)
                 if not datas:
                     # No more data, break out of the loop
                     break
@@ -46,8 +47,8 @@ def exercise_view(request):
                     )
 
                     # If the object was created, save it to the database
-                    if created:
-                        exercise.save()
+                    # if created:
+                    #     exercise.save()
 
                 # Update the offset value by 10 to get the next set of results
                 offset += 10
@@ -65,6 +66,7 @@ def reviewer_view(request):
         return JsonResponse(serializer.data, safe=False)
     elif request.method == 'POST':
         data = JSONParser().parse(request)
+        # data["exercise"] = Exercise.objects.get(id=data.get("exercise", "default value"))
         serializer = ReviewerSerializer(data=data)
         if serializer.is_valid():
             serializer.save()

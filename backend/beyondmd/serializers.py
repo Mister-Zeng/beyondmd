@@ -13,7 +13,7 @@ class ReviewerSerializer(serializers.ModelSerializer):
         fields = ['id', 'first_name', 'last_name', 'rating', 'comment', 'posted', 'exercise']
 
     def create(self, validated_data):
-        return Reviewer.objects.create(validated_data)
+        return Reviewer.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get('first_name', instance.first_name)
@@ -32,7 +32,7 @@ class ExerciseSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'exercise_type', 'muscle', 'equipment', 'difficulty', 'instructions']
 
     def create(self, validated_data):
-        return Exercise.objects.create(validated_data)
+        return Exercise.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
