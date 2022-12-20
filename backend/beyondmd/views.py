@@ -52,35 +52,6 @@ def exercise_view(request):
                 # Update the offset value by 10 to get the next set of results
                 offset += 10
         return HttpResponse("Exercises fetched successfully", datas)
-    # elif request.method == 'POST':
-    #     data = JSONParser().parse(request)
-    #     serializer = ExerciseSerializer(data=data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return JsonResponse(serializer.data, status=201)
-    #     return JsonResponse(serializer.errors, status=400)
-    #     # retrieve all exercises or a specific exercise if an id is provided
-    #     if request.GET.get("id"):
-    #         exercise = Exercise.objects.get(pk=request.GET.get("id"))
-    #         return JsonResponse({"exercise": exercise})
-    #     else:
-    #         exercises = Exercise.objects.all()
-    #         return JsonResponse({"exercises": exercises})
-    # elif request.method == "POST":
-    #     # create a new exercise
-    #     name = request.POST.get("name")
-    #     exercise_type = request.POST.get("exercise_type")
-    #     muscle = request.POST.get("muscle")
-    #     difficulty = request.POST.get("difficulty")
-    #     instructions = request.POST.get("instructions")
-    #     exercise = Exercise.objects.create(
-    #         name=name,
-    #         exercise_type=exercise_type,
-    #         muscle=muscle,
-    #         difficulty=difficulty,
-    #         instructions=instructions
-    #     )
-    #     return JsonResponse({"exercise": exercise})
 
 
 @csrf_exempt

@@ -10,7 +10,7 @@ from .models import Reviewer, Exercise
 class ReviewerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reviewer
-        fields = ['id', 'first_name', 'last_name', 'rating', 'comment', 'posted', 'exercise_id']
+        fields = ['id', 'first_name', 'last_name', 'rating', 'comment', 'posted', 'exercise']
 
     def create(self, validated_data):
         return Reviewer.objects.create(validated_data)
@@ -21,7 +21,7 @@ class ReviewerSerializer(serializers.ModelSerializer):
         instance.rating = validated_data.get('rating', instance.rating)
         instance.comment = validated_data.get('comment', instance.comment)
         instance.posted = validated_data.get('posted', instance.posted)
-        instance.exercise_id = validated_data.get('exercise_id', instance.exercise_id)
+        instance.exercise = validated_data.get('exercise', instance.exercise)
         instance.save()
         return instance
 

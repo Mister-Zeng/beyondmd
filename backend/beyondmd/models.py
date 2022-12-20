@@ -28,5 +28,5 @@ class Reviewer(models.Model):
     rating = models.IntegerField(choices=RATING_CHOICES)
     comment = models.CharField(max_length=250)
     posted = models.DateTimeField(default=timezone.now)
-    exercise_id = models.ForeignKey(Exercise, on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
 
