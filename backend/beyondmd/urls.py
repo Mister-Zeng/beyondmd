@@ -3,5 +3,5 @@ from .views import exercise_view, reviewer_view
 
 urlpatterns = [
     path('exercises/', exercise_view),
-    path('reviewers/', reviewer_view)
+    path('exercise/reviewers/', reviewer_view)
 ]

@@ -1,7 +1,8 @@
-import { Typography, Button, Box, TextField, Rating } from "@mui/material";
-import React, { FC } from "react";
+import { Typography, Button, Box, Rating } from "@mui/material";
+import React from "react";
 import type { ReviewerPropsType } from "./ReviewForm.type";
 import axios, { AxiosResponse } from "axios";
+import ReviewInput from "../ReviewInput";
 
 const ReviewForm: ({ exerciseId }: { exerciseId: number }) => JSX.Element = ({
   exerciseId,
@@ -12,134 +13,116 @@ const ReviewForm: ({ exerciseId }: { exerciseId: number }) => JSX.Element = ({
     first_name: "",
     last_name: "",
     exercise: exerciseId,
-    rating: 1,
+    rating: 5,
     comment: "",
   });
 
   const reviewSubmit: () => Promise<void> = async () => {
     try {
-      const response: AxiosResponse<any, any> = await axios.post("reviewer/");
+      const response: AxiosResponse<any, any> = await axios.post(
+        "reviewers/",
+        reviewer
+      );
+      if (response.status === 201) {
+        console.log("success");
+        setReviewer({
+          first_name: "",
+          last_name: "",
+          exercise: exerciseId,
+          rating: 5,
+          comment: "",
+        });
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const styles = {
-    container: {
-      display: "flex",
-      alignItems: "center",
-      padding: 3,
-      paddingTop: 2,
-    },
-    textStyle: {
-      fontSize: 16,
-      width: 100,
-      color: "#E8EDDF",
-      "@media only screen and (max-width:600px)": {
-        fontSize: 12,
-      },
-    },
-    textInput: {
-      width: "60%",
-      input: { color: "#E8EDDF" },
-    },
+  const reviewInputOnChangeHandler: (
+    reviewer: ReviewerPropsType,
+    keyState: string,
+    value: string
+  ) => void = (
+    reviewer: ReviewerPropsType,
+    keyState: string,
+    value: string
+  ) => {
+    setReviewer({ ...reviewer, [keyState]: value });
   };
 
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"column"}
-      padding={2}
-      sx={{
-        width: "50%",
-        backgroundColor: "#333533",
-        "@media only screen and (max-width: 760px)": {
-          width: "100%",
-        },
-      }}
-    >
+    <form>
       <Box
         display={"flex"}
         flexDirection={"row"}
+        justifyContent={"center"}
+        alignItems={"center"}
         sx={{
-          "@media only screen and (max-width: 1500px)": {
+          "@media only screen and (max-width: 1160px)": {
+            flexDirection: "column",
+          },
+          "@media only screen and (max-width: 700px)": {
             flexDirection: "column",
           },
         }}
       >
-        <Box sx={styles.container}>
-          <Typography sx={styles.textStyle}>First Name:</Typography>
-          <TextField
-            id="firstName"
-            variant="outlined"
-            size="small"
-            sx={styles.textInput}
-            onChange={(event) => {
-              setReviewer({ ...reviewer, first_name: event.target.value });
-            }}
+        <Box display={"flex"} flexDirection={"row"}>
+          <ReviewInput
+            label={"First Name"}
+            keyState={"first_name"}
+            reviewer={reviewer}
+            onChange={reviewInputOnChangeHandler}
+          />
+          <ReviewInput
+            label={"Last Name"}
+            keyState={"last_name"}
+            reviewer={reviewer}
+            onChange={reviewInputOnChangeHandler}
+          />
+          <ReviewInput
+            label={"Comment"}
+            keyState={"comment"}
+            reviewer={reviewer}
+            onChange={reviewInputOnChangeHandler}
           />
         </Box>
 
-        <Box sx={styles.container}>
-          <Typography sx={styles.textStyle}>Last Name:</Typography>
-          <TextField
-            id="lastName"
-            variant="outlined"
+        <Box display={"flex"} flexDirection={"row"}>
+          <Box display={"flex"} flexDirection={"row"} sx={{ padding: 0 }}>
+            <Typography component="legend" sx={{ fontFamily: "Georgia" }}>
+              Rating:
+            </Typography>
+            <Rating
+              name="exercise rating"
+              value={reviewer.rating}
+              onChange={(event, newValue) => {
+                setReviewer({ ...reviewer, rating: newValue });
+              }}
+              precision={0.5}
+              size="small"
+            />
+          </Box>
+
+          <Button
             size="small"
-            sx={styles.textInput}
-            onChange={(event) => {
-              setReviewer({ ...reviewer, last_name: event.target.value });
+            variant="contained"
+            sx={{
+              backgroundColor: "#F5CB5C",
+              fontSize: 10,
+              color: "#333533",
+              marginLeft: 4,
+              ":hover": {
+                backgroundColor: "#F5CB5C",
+                border: "1px solid black",
+              },
             }}
-          />
+            onClick={reviewSubmit}
+          >
+            Submit
+          </Button>
         </Box>
       </Box>
-
-      <Box sx={styles.container}>
-        <Typography sx={[styles.textStyle]}>Rating:</Typography>
-        <Rating
-          name="exercise rating"
-          value={reviewer.rating}
-          onChange={(event, newValue) => {
-            setReviewer({ ...reviewer, rating: newValue });
-          }}
-        />
-      </Box>
-      {/* </Box> */}
-
-      <Box sx={styles.container}>
-        <Typography sx={styles.textStyle}>Comment:</Typography>
-        <TextField
-          id="comment"
-          variant="outlined"
-          size="medium"
-          minRows={3}
-          multiline={true}
-          sx={styles.textInput}
-          onChange={(event) => {
-            setReviewer({ ...reviewer, comment: event.target.value });
-          }}
-        />
-      </Box>
-
-      <Box
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        padding={2}
-      >
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#F5CB5C",
-            width: 100,
-            padding: 0,
-            color: "#333533",
-          }}
-        >
-          Submit
-        </Button>
-      </Box>
-    </Box>
+    </form>
   );
 };
 

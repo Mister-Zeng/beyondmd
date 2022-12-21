@@ -1,12 +1,12 @@
 import { Box, Typography, Button } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
-import ExerciseCard from "../../components/ExerciseCard";
-import ExerciseCardTitle from "../../components/ExerciseCardTitle";
 import SearchBar from "../../components/SearchBar";
 import Select from "react-select";
 import { typeList, muscleList, difficultyList } from "../../constant/exercise";
 import type { ExerciseSelectPropsType, ExerciseType } from "./MainScreen.type";
 import axios, { AxiosResponse } from "axios";
+import ExerciseTable from "../../components/ExerciseTable";
+import SelectBox from "../../components/SelectBox";
 
 const MainScreen: FC = () => {
   const [exerciseList, setExerciseList] = useState<ExerciseType[]>([]);
@@ -65,6 +65,16 @@ const MainScreen: FC = () => {
     setFilteredExerciseList(filteredList);
   };
 
+  const selectBoxHandler: (selectedOption: string, stateKey: string) => void = (
+    selectedOption: string,
+    stateKey: string
+  ) => {
+    setExerciseSelect({
+      ...exerciseSelect,
+      [stateKey]: selectedOption,
+    });
+  };
+
   useEffect(() => {
     const getExercises: () => Promise<void> = async () => {
       try {
@@ -81,23 +91,6 @@ const MainScreen: FC = () => {
 
     getExercises();
   }, []);
-
-  const styles = {
-    filterSelectBox: {
-      width: 200,
-      margin: "10px",
-      "@media only screen and (max-width: 1200px)": {
-        width: 100,
-      },
-    },
-    filterSelectText: {
-      color: "white",
-      width: "120px",
-      "@media only screen and (max-width: 600px)": {
-        fontSize: 14,
-      },
-    },
-  };
 
   return (
     <Box
@@ -128,80 +121,26 @@ const MainScreen: FC = () => {
           },
         }}
       >
-        <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-          <Typography sx={styles.filterSelectText}>Exercise Type</Typography>
-          <Select
-            options={typeList}
-            styles={{
-              control: (baseStyles) => ({
-                ...baseStyles,
-                ...styles.filterSelectBox,
-              }),
-              valueContainer: (baseStyles) => ({
-                ...baseStyles,
-                "@media only screen and (max-width: 600px)": {
-                  fontSize: 14,
-                },
-              }),
-            }}
-            onChange={(selectedOption) => {
-              setExerciseSelect({
-                ...exerciseSelect,
-                exercise_type: selectedOption!.value,
-              });
-            }}
-          />
-        </Box>
+        <SelectBox
+          onChange={selectBoxHandler}
+          option={typeList}
+          title={"Exercise Type"}
+          stateKey={"exercise_type"}
+        />
 
-        <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-          <Typography sx={styles.filterSelectText}>Muscle Type</Typography>
-          <Select
-            options={muscleList}
-            styles={{
-              control: (baseStyles) => ({
-                ...baseStyles,
-                ...styles.filterSelectBox,
-              }),
-              valueContainer: (baseStyles) => ({
-                ...baseStyles,
-                "@media only screen and (max-width: 600px)": {
-                  fontSize: 14,
-                },
-              }),
-            }}
-            onChange={(selectedOption) => {
-              setExerciseSelect({
-                ...exerciseSelect,
-                muscle: selectedOption!.value,
-              });
-            }}
-          />
-        </Box>
+        <SelectBox
+          onChange={selectBoxHandler}
+          option={muscleList}
+          title={"Muscle Type"}
+          stateKey={"muscle"}
+        />
 
-        <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-          <Typography sx={styles.filterSelectText}>Difficulty Level</Typography>
-          <Select
-            options={difficultyList}
-            styles={{
-              control: (baseStyles) => ({
-                ...baseStyles,
-                ...styles.filterSelectBox,
-              }),
-              valueContainer: (baseStyles) => ({
-                ...baseStyles,
-                "@media only screen and (max-width: 600px)": {
-                  fontSize: 14,
-                },
-              }),
-            }}
-            onChange={(selectedOption) => {
-              setExerciseSelect({
-                ...exerciseSelect,
-                difficulty: selectedOption!.value,
-              });
-            }}
-          />
-        </Box>
+        <SelectBox
+          onChange={selectBoxHandler}
+          option={difficultyList}
+          title={"Difficulty Level"}
+          stateKey={"difficulty"}
+        />
 
         <Button
           variant="contained"
@@ -226,23 +165,7 @@ const MainScreen: FC = () => {
         </Button>
       </Box>
 
-      <Box sx={{ minHeight: "100vh", marginBottom: 5 }}>
-        <ExerciseCardTitle />
-
-        {filteredExerciseList.map((exercise, index) => {
-          return (
-            <ExerciseCard
-              key={index}
-              id={exercise.id}
-              exerciseName={exercise.name}
-              exerciseType={exercise.exercise_type}
-              muscleType={exercise.muscle}
-              difficultyLevel={exercise.difficulty}
-              instructions={exercise.instructions}
-            />
-          );
-        })}
-      </Box>
+      <ExerciseTable exerciseList={filteredExerciseList} />
 
       <Box sx={{ position: "absolute", bottom: 0 }}>
         <Typography
