@@ -3,7 +3,6 @@ import ReviewForm from "../../components/ReviewForm";
 import { Box, Container, Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import ExerciseCardDetails from "../../components/ExerciseCardDetails";
-
 import axios, { AxiosResponse } from "axios";
 import ReviewerCard from "../../components/ReviewerCard";
 import { ExerciseReviewsTypes } from "./type";
@@ -57,15 +56,7 @@ const ExerciseScreen: FC = () => {
           id={location.state.id}
         />
 
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            "@media only screen and (max-width:750px)": {
-              flexDirection: "column",
-            },
-          }}
-        >
+        <Box sx={styles.reviewContainer}>
           <ReviewForm
             exerciseId={location.state.id}
             addReviewOnSubmit={addReviewOnSubmit}

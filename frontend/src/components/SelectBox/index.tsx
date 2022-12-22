@@ -16,12 +16,7 @@ const SelectBox: ({
   stateKey,
 }: SelectBoxPropsType) => {
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"row"}
-      alignItems={"center"}
-      sx={styles.container}
-    >
+    <Box sx={styles.container}>
       <Typography sx={styles.filterSelectText}>{title}</Typography>
       <Select
         options={option}

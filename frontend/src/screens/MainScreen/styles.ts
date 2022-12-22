@@ -5,7 +5,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    minHeight: "100vh",
+    height: "100vh",
     width: "100%",
   },
   selectBoxContainer: {
@@ -39,6 +39,7 @@ const styles = {
     bottom: 0,
     color: "white",
     flexDirection: "row",
+    margin: 2,
   },
 };
 

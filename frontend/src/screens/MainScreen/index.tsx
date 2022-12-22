@@ -135,13 +135,7 @@ const MainScreen: FC = () => {
       <ExerciseTable exerciseList={filteredExerciseList} />
 
       <Box sx={styles.footer}>
-        <Typography
-          sx={{
-            color: "white",
-          }}
-        >
-          © 2022 Jason Zeng
-        </Typography>
+        <Typography color="white">© 2022 Jason Zeng</Typography>
       </Box>
     </Box>
   );

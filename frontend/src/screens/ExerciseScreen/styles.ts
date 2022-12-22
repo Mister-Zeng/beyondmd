@@ -7,6 +7,13 @@ const styles = {
       marginLeft: 4,
     },
   },
+  reviewContainer: {
+    display: "flex",
+    flexDirection: "row",
+    "@media only screen and (max-width:750px)": {
+      flexDirection: "column",
+    },
+  },
   reviewList: {
     display: "flex",
     flexDirection: "column",

@@ -1,5 +1,8 @@
 const styles = {
   container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     "@media only screen and (max-width: 450px)": {
       flexDirection: "column",
       alignItems: "flex-start",
