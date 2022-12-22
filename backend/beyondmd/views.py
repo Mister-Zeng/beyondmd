@@ -10,65 +10,77 @@ from dotenv import load_dotenv
 
 
 @csrf_exempt
-@require_http_methods(["GET", "POST"])
-def exercise_view(request):
-    if request.method == "GET":
-        exercises = Exercise.objects.all()
-        serializer = ExerciseSerializer(exercises, many=True)
-        return JsonResponse(serializer.data, safe=False)
-    elif request.method == 'POST':
-        load_dotenv()
-        api_key = os.environ.get('API_KEY')
-        exercise_type = ['cardio', 'olympic_weightlifting', 'plyometrics', 'powerlifting', 'strength', 'stretching',
-                         'strongman']
-
-        for e in exercise_type:
-
-            offset = 0
-            while True:
-                response = requests.get('https://api.api-ninjas.com/v1/exercises',
-                                        headers={'X-Api-Key': api_key},
-                                        params={'type': e, 'offset': offset})
-                datas = response.json()
-                print(len(datas), e)
-                if not datas:
-                    # No more data, break out of the loop
-                    break
-
-                for data in datas:
-                    # Check if the data already exists in the database
-                    exercise, created = Exercise.objects.get_or_create(
-                        name=data.get("name", "default value"),
-                        exercise_type=data.get("type", "default value"),
-                        muscle=data.get("muscle", "default value"),
-                        equipment=data.get("equipment", "default value"),
-                        difficulty=data.get("difficulty", "default value"),
-                        instructions=data.get("instructions", "default value")
-                    )
-
-                    # If the object was created, save it to the database
-                    # if created:
-                    #     exercise.save()
-
-                # Update the offset value by 10 to get the next set of results
-                offset += 10
-        return HttpResponse("Exercises fetched successfully", datas)
+@require_http_methods(["GET"])
+def get_exercises(request):
+    exercises = Exercise.objects.all()
+    serializer = ExerciseSerializer(exercises, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 
 @csrf_exempt
-@require_http_methods(['GET', 'POST'])
-def reviewer_view(request):
-    if request.method == 'GET':
-        # retrieve all reviewers
-        reviewers = Reviewer.objects.all()
-        # serialize reviewers into JSON
-        serializer = ReviewerSerializer(reviewers, many=True)
-        return JsonResponse(serializer.data, safe=False)
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        # data["exercise"] = Exercise.objects.get(id=data.get("exercise", "default value"))
-        serializer = ReviewerSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+@require_http_methods(["POST"])
+def save_exercise_from_api(request):
+    load_dotenv()
+    api_key = os.environ.get('API_KEY')
+    exercise_type = ['cardio', 'olympic_weightlifting', 'plyometrics', 'powerlifting', 'strength', 'stretching',
+                     'strongman']
+
+    for e in exercise_type:
+
+        offset = 0
+        while True:
+            response = requests.get('https://api.api-ninjas.com/v1/exercises',
+                                    headers={'X-Api-Key': api_key},
+                                    params={'type': e, 'offset': offset})
+            datas = response.json()
+            print(len(datas), e)
+            if not datas:
+                # No more data, break out of the loop
+                break
+
+            for data in datas:
+                # Check if the data already exists in the database, if not create
+                Exercise.objects.get_or_create(
+                    name=data.get("name", "default value"),
+                    exercise_type=data.get("type", "default value"),
+                    muscle=data.get("muscle", "default value"),
+                    equipment=data.get("equipment", "default value"),
+                    difficulty=data.get("difficulty", "default value"),
+                    instructions=data.get("instructions", "default value")
+                )
+
+            # Update the offset value by 10 to get the next set of results
+            offset += 10
+    return HttpResponse("Exercises fetched successfully")
+
+
+@csrf_exempt
+@require_http_methods(['GET'])
+def get_reviews(request):
+    # retrieve all reviewers
+    reviewers = Reviewer.objects.all()
+    # serialize reviewers into JSON
+    serializer = ReviewerSerializer(reviewers, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+@csrf_exempt
+@require_http_methods(['GET'])
+def exercise_reviews(request, exercise_id):
+    reviewers = ReviewerSerializer.get_reviewers_from_exercise(exercise_id=exercise_id)
+    serializer = ReviewerSerializer(reviewers, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+@csrf_exempt
+@require_http_methods(['POST'])
+def submit_review(request):
+    data = JSONParser().parse(request)
+    serializer = ReviewerSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse(serializer.data, status=201)
+    return JsonResponse(serializer.errors, status=400)
+
+
+

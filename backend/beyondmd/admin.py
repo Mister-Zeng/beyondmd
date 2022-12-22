@@ -10,6 +10,8 @@ class ExerciseModel(admin.ModelAdmin):
     list_display = ("id", "name", "exercise_type", "muscle", "equipment", "difficulty", "instructions")
 
 
-admin.site.register(Reviewer)
-
+@admin.register(Reviewer)
+class ReviewerModel(admin.ModelAdmin):
+    list_filter = ("rating", "exercise")
+    list_display = ("id", "first_name", "last_name", "rating", "comment", "exercise")
 

@@ -1,12 +1,13 @@
 import { Box, Typography, Button } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import SearchBar from "../../components/SearchBar";
-import Select from "react-select";
 import { typeList, muscleList, difficultyList } from "../../constant/exercise";
-import type { ExerciseSelectPropsType, ExerciseType } from "./MainScreen.type";
+import type { ExerciseSelectPropsType, ExerciseType } from "./type";
 import axios, { AxiosResponse } from "axios";
 import ExerciseTable from "../../components/ExerciseTable";
 import SelectBox from "../../components/SelectBox";
+import styles from "./styles";
+import SearchIcon from "@mui/icons-material/Search";
 
 const MainScreen: FC = () => {
   const [exerciseList, setExerciseList] = useState<ExerciseType[]>([]);
@@ -24,6 +25,7 @@ const MainScreen: FC = () => {
     }
   );
 
+  // Function that filters the exercise list based on the selected filters
   const searchFilterHandler: () => void = () => {
     function filterExercises(
       exercises: ExerciseType[],
@@ -48,6 +50,7 @@ const MainScreen: FC = () => {
     setFilteredExerciseList(filteredList);
   };
 
+  // Function that filters the exercise list based on the search bar input
   const searchBarHandler: (searchWord: string) => void = (
     searchWord: string
   ) => {
@@ -65,6 +68,7 @@ const MainScreen: FC = () => {
     setFilteredExerciseList(filteredList);
   };
 
+  // Function that is passed to the SelectBox component as prop to extract data from child to parent component
   const selectBoxHandler: (selectedOption: string, stateKey: string) => void = (
     selectedOption: string,
     stateKey: string
@@ -75,6 +79,7 @@ const MainScreen: FC = () => {
     });
   };
 
+  // Function that calls the API to get the list of exercises on load
   useEffect(() => {
     const getExercises: () => Promise<void> = async () => {
       try {
@@ -93,34 +98,14 @@ const MainScreen: FC = () => {
   }, []);
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#333533",
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        minHeight: "100vh",
-        width: "100%",
-      }}
-    >
+    <Box sx={styles.mainContainer}>
       <SearchBar
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           searchBarHandler(e.target.value);
         }}
       />
 
-      <Box
-        display={"flex"}
-        flexDirection={"row"}
-        alignItems={"center"}
-        sx={{
-          marginBottom: 2,
-          "@media only screen and (max-width: 800px)": {
-            flexDirection: "column",
-          },
-        }}
-      >
+      <Box sx={styles.selectBoxContainer}>
         <SelectBox
           onChange={selectBoxHandler}
           option={typeList}
@@ -142,32 +127,14 @@ const MainScreen: FC = () => {
           stateKey={"difficulty"}
         />
 
-        <Button
-          variant="contained"
-          size="small"
-          sx={{
-            height: 35,
-            backgroundColor: "#F5CB5C",
-            color: "#333533",
-            borderRadius: 5,
-            "@media only screen and (max-width: 1200px)": {
-              marginBottom: 1,
-            },
-            "@media only screen and (max-width: 600px)": {
-              width: 70,
-              height: 25,
-              fontSize: 11,
-            },
-          }}
-          onClick={searchFilterHandler}
-        >
-          Search
+        <Button sx={styles.searchButton} onClick={searchFilterHandler}>
+          <SearchIcon />
         </Button>
       </Box>
 
       <ExerciseTable exerciseList={filteredExerciseList} />
 
-      <Box sx={{ position: "absolute", bottom: 0 }}>
+      <Box sx={styles.footer}>
         <Typography
           sx={{
             color: "white",

@@ -7,15 +7,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Column, ExerciseType } from "./ExerciseTable.type";
+import { Column, ExerciseType } from "./type";
 import { Link } from "react-router-dom";
 
 const columns: readonly Column[] = [
-  { id: "name", label: "Exercise Name", minWidth: 170 },
-  { id: "exercise_type", label: "Exercise Type", minWidth: 100 },
-  { id: "muscle", label: "Muscle Type", minWidth: 100 },
+  { id: "name", label: "Exercise Name", minWidth: 90 },
+  { id: "exercise_type", label: "Exercise Type", minWidth: 90 },
+  { id: "muscle", label: "Muscle Type", minWidth: 90 },
   { id: "difficulty", label: "Difficulty Level", minWidth: 100 },
-  { id: "instructions", label: "Instructions", minWidth: 100 },
+  { id: "instructions", label: "Instructions", minWidth: 90 },
 ];
 
 export default function ExerciseTable({
@@ -65,7 +65,10 @@ export default function ExerciseTable({
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     {columns.map((column) => {
-                      const value: string = row[column.id];
+                      const value: string =
+                        column.id === "instructions"
+                          ? row[column.id].slice(0, 300) + " ...."
+                          : row[column.id];
 
                       return (
                         <TableCell key={column.id} align={column.align}>

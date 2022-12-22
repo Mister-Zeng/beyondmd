@@ -1,32 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import Select from "react-select";
-import type { SelectBoxPropsType } from "./SelectBox.type";
-
-const styles = {
-  filterSelectBox: {
-    width: 200,
-    margin: "10px",
-
-    "@media only screen and (max-width: 1200px)": {
-      width: 100,
-    },
-    "@media only screen and (max-width: 800px)": {
-      width: 200,
-    },
-    "@media only screen and (max-width: 600px)": {
-      height: 35,
-      minHeight: 35,
-    },
-  },
-  filterSelectText: {
-    color: "white",
-    width: "120px",
-    "@media only screen and (max-width: 600px)": {
-      fontSize: 14,
-    },
-  },
-};
+import type { SelectBoxPropsType } from "./type";
+import styles from "./styles";
 
 const SelectBox: ({
   onChange,
@@ -40,21 +16,27 @@ const SelectBox: ({
   stateKey,
 }: SelectBoxPropsType) => {
   return (
-    <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
+    <Box
+      display={"flex"}
+      flexDirection={"row"}
+      alignItems={"center"}
+      sx={styles.container}
+    >
       <Typography sx={styles.filterSelectText}>{title}</Typography>
       <Select
         options={option}
         menuPortalTarget={document.body}
         styles={{
-          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+          menuPortal: (baseStyles) => ({ ...baseStyles, zIndex: 9999 }),
           control: (baseStyles) => ({
             ...baseStyles,
             ...styles.filterSelectBox,
           }),
           valueContainer: (baseStyles) => ({
             ...baseStyles,
+            fontSize: "1rem",
             "@media only screen and (max-width: 600px)": {
-              fontSize: 14,
+              fontSize: ".9rem",
             },
           }),
         }}

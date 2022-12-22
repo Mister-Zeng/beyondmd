@@ -1,53 +1,31 @@
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import React from "react";
-import { ReviewerPropsType } from "../ReviewForm/ReviewForm.type";
+import { ReviewInputPropsType } from "./type";
+import styles from "./styles";
 
-const styles = {
-  container: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-
-    width: 200,
-  },
-  textInput: {
-    width: "80%",
-    input: {
-      color: "black",
-      fontSize: 16,
-      "@media only screen and (max-width:600px)": {
-        fontSize: 12,
-      },
-    },
-  },
-};
-
-const ReviewInput = ({
+const ReviewInput: ({
   label,
   keyState,
   reviewer,
   onChange,
-}: {
-  label: string;
-  keyState: string;
-  reviewer: ReviewerPropsType;
-  onChange: (
-    reviewer: ReviewerPropsType,
-    keyState: string,
-    value: string
-  ) => void;
-}) => {
+  value,
+}: ReviewInputPropsType) => JSX.Element = ({
+  label,
+  keyState,
+  reviewer,
+  onChange,
+  value,
+}: ReviewInputPropsType) => {
   return (
     <Box sx={styles.container}>
+      <Typography sx={styles.textLabel}>{label}</Typography>
       <TextField
-        variant="standard"
-        label={label}
-        color="warning"
         size="small"
         sx={styles.textInput}
         onChange={(event) => {
           onChange(reviewer, keyState, event.target.value);
         }}
+        value={value}
       />
     </Box>
   );

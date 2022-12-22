@@ -1,33 +1,28 @@
 import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import ArticleIcon from "@mui/icons-material/Article";
 import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../images/logo.png";
+import styles from "./styles";
 
 const NavBar: FC = () => {
-  const buttonStyles = { margin: 1, color: "black" };
-
   return (
     <React.Fragment>
-      <AppBar
-        position="fixed"
-        sx={{
-          backgroundColor: "#F5CB5C",
-        }}
-      >
+      <AppBar sx={styles.appBar}>
         <Toolbar>
-          <Typography variant="h4">
-            <img width={"70px"} src={logo} alt="logo" />
-          </Typography>
-
-          <Box display="flex" marginRight="auto">
-            <Button sx={buttonStyles} component={NavLink} to="/">
-              Home
-            </Button>
-          </Box>
+          <Button sx={styles.button} component={NavLink} to="/">
+            <img width={"100px"} src={logo} alt="logo" />
+          </Button>
 
           <Box display="flex" marginLeft="auto">
-            <Button sx={buttonStyles} component={NavLink} to="/resume">
-              View Resume
+            <Button sx={styles.button} component={NavLink} to="/">
+              <HomeIcon />
+              <Typography fontSize={".6rem"}>Home</Typography>
+            </Button>
+            <Button sx={styles.button} component={NavLink} to="/resume">
+              <ArticleIcon />
+              <Typography fontSize={".6rem"}>Resume</Typography>
             </Button>
           </Box>
         </Toolbar>

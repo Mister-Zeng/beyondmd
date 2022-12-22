@@ -1,56 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React, { FC } from "react";
-import { ExerciseCardDetailsPropsType } from "./ExerciseCardDetails.type";
-
-const styles = {
-  exerciseContainer: {
-    display: "flex",
-    flexDirection: "column",
-    padding: 2,
-  },
-  exerciseInnerContainer: {
-    display: "flex",
-    flexDirection: "row",
-    "@media only screen and (max-width: 375px)": {
-      flexDirection: "column",
-    },
-  },
-  exerciseTitleContainer: {
-    padding: 5,
-    paddingTop: 2,
-    paddingBottom: 2,
-    width: "80",
-    "@media only screen and (max-width: 375px)": {
-      padding: 2,
-      paddingBottom: 0,
-    },
-  },
-  exerciseTitleOuterContainer: {
-    displays: "flex",
-    flexDirection: "row",
-    "@media only screen and (max-width: 1000px)": {
-      flexDirection: "column",
-    },
-  },
-  exerciseKeyText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginRight: 6,
-    fontFamily: "Georgia",
-    color: "#333533",
-    "@media only screen and (max-width: 600px)": {
-      fontSize: 12,
-    },
-  },
-  exerciseValueText: {
-    fontSize: 16,
-    fontFamily: "Georgia",
-    color: "#333533",
-    "@media only screen and (max-width: 600px)": {
-      fontSize: 12,
-    },
-  },
-};
+import { ExerciseCardDetailsPropsType } from "./type";
+import styles from "./styles";
 
 const ExerciseCardDetails: FC<ExerciseCardDetailsPropsType> = ({
   exerciseName,
@@ -64,19 +15,15 @@ const ExerciseCardDetails: FC<ExerciseCardDetailsPropsType> = ({
       <Box sx={styles.exerciseInnerContainer}>
         <Box sx={styles.exerciseTitleOuterContainer}>
           <Box sx={styles.exerciseTitleContainer}>
-            <Typography variant="body1" sx={styles.exerciseKeyText}>
-              Exercise Name:
-            </Typography>
-            <Typography variant="body1" sx={styles.exerciseValueText}>
+            <Typography sx={styles.exerciseKeyText}>Exercise Name:</Typography>
+            <Typography sx={styles.exerciseValueText}>
               {exerciseName}
             </Typography>
           </Box>
 
           <Box sx={styles.exerciseTitleContainer}>
-            <Typography variant="body1" sx={styles.exerciseKeyText}>
-              Exericse Type:
-            </Typography>
-            <Typography variant="body1" sx={styles.exerciseValueText}>
+            <Typography sx={styles.exerciseKeyText}>Exericse Type:</Typography>
+            <Typography sx={styles.exerciseValueText}>
               {exerciseType}
             </Typography>
           </Box>
@@ -84,19 +31,13 @@ const ExerciseCardDetails: FC<ExerciseCardDetailsPropsType> = ({
 
         <Box sx={styles.exerciseTitleOuterContainer}>
           <Box sx={styles.exerciseTitleContainer}>
-            <Typography variant="body1" sx={styles.exerciseKeyText}>
-              Muscle Type:
-            </Typography>
-            <Typography variant="body1" sx={styles.exerciseValueText}>
-              {muscleType}
-            </Typography>
+            <Typography sx={styles.exerciseKeyText}>Muscle Type:</Typography>
+            <Typography sx={styles.exerciseValueText}>{muscleType}</Typography>
           </Box>
 
           <Box sx={styles.exerciseTitleContainer}>
-            <Typography variant="body1" sx={styles.exerciseKeyText}>
-              Difficuly Type:
-            </Typography>
-            <Typography variant="body1" sx={styles.exerciseValueText}>
+            <Typography sx={styles.exerciseKeyText}>Difficuly Type:</Typography>
+            <Typography sx={styles.exerciseValueText}>
               {difficultyLevel}
             </Typography>
           </Box>
@@ -104,12 +45,9 @@ const ExerciseCardDetails: FC<ExerciseCardDetailsPropsType> = ({
       </Box>
 
       <Box sx={styles.exerciseTitleContainer}>
-        <Typography variant="body1" sx={styles.exerciseKeyText}>
-          Instructions:
-        </Typography>
-        <Typography variant="body1" sx={styles.exerciseValueText}>
-          {instructions}
-        </Typography>
+        <Typography sx={styles.exerciseKeyText}>Instructions:</Typography>
+        <Typography sx={styles.exerciseValueText}>{instructions}</Typography>
+        <hr style={styles.lineBreak} />
       </Box>
     </Box>
   );

@@ -1,13 +1,23 @@
 import { Typography, Button, Box, Rating } from "@mui/material";
 import React from "react";
-import type { ReviewerPropsType } from "./ReviewForm.type";
+import type { ReviewerPropsType } from "./type";
 import axios, { AxiosResponse } from "axios";
 import ReviewInput from "../ReviewInput";
+import styles from "./styles";
+import { ExerciseReviewsTypes } from "../../screens/ExerciseScreen/type";
 
-const ReviewForm: ({ exerciseId }: { exerciseId: number }) => JSX.Element = ({
+const ReviewForm: ({
   exerciseId,
+  addReviewOnSubmit,
 }: {
   exerciseId: number;
+  addReviewOnSubmit: (review: ExerciseReviewsTypes) => void;
+}) => JSX.Element = ({
+  exerciseId,
+  addReviewOnSubmit,
+}: {
+  exerciseId: number;
+  addReviewOnSubmit: (review: ExerciseReviewsTypes) => void;
 }) => {
   const [reviewer, setReviewer] = React.useState<ReviewerPropsType>({
     first_name: "",
@@ -17,6 +27,7 @@ const ReviewForm: ({ exerciseId }: { exerciseId: number }) => JSX.Element = ({
     comment: "",
   });
 
+  // Function to call the API to submit the review
   const reviewSubmit: () => Promise<void> = async () => {
     try {
       const response: AxiosResponse<any, any> = await axios.post(
@@ -24,20 +35,22 @@ const ReviewForm: ({ exerciseId }: { exerciseId: number }) => JSX.Element = ({
         reviewer
       );
       if (response.status === 201) {
-        console.log("success");
-        setReviewer({
-          first_name: "",
-          last_name: "",
-          exercise: exerciseId,
-          rating: 5,
-          comment: "",
-        });
+        addReviewOnSubmit(response.data);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setReviewer({
+        first_name: "",
+        last_name: "",
+        exercise: exerciseId,
+        rating: 5,
+        comment: "",
+      });
     }
   };
 
+  // Function that is passed to the ReviewInput component as prop to extract data from child to parent component
   const reviewInputOnChangeHandler: (
     reviewer: ReviewerPropsType,
     keyState: string,
@@ -52,46 +65,41 @@ const ReviewForm: ({ exerciseId }: { exerciseId: number }) => JSX.Element = ({
 
   return (
     <form>
-      <Box
-        display={"flex"}
-        flexDirection={"row"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        sx={{
-          "@media only screen and (max-width: 1160px)": {
-            flexDirection: "column",
-          },
-          "@media only screen and (max-width: 700px)": {
-            flexDirection: "column",
-          },
-        }}
-      >
-        <Box display={"flex"} flexDirection={"row"}>
-          <ReviewInput
-            label={"First Name"}
-            keyState={"first_name"}
-            reviewer={reviewer}
-            onChange={reviewInputOnChangeHandler}
-          />
-          <ReviewInput
-            label={"Last Name"}
-            keyState={"last_name"}
-            reviewer={reviewer}
-            onChange={reviewInputOnChangeHandler}
-          />
-          <ReviewInput
-            label={"Comment"}
-            keyState={"comment"}
-            reviewer={reviewer}
-            onChange={reviewInputOnChangeHandler}
-          />
-        </Box>
+      <Box sx={styles.container}>
+        <Box>
+          <Typography sx={styles.heading}>Exercise Review</Typography>
 
-        <Box display={"flex"} flexDirection={"row"}>
-          <Box display={"flex"} flexDirection={"row"} sx={{ padding: 0 }}>
-            <Typography component="legend" sx={{ fontFamily: "Georgia" }}>
-              Rating:
-            </Typography>
+          <Box sx={styles.reviewerNameContainer}>
+            <ReviewInput
+              label={"First Name"}
+              keyState={"first_name"}
+              reviewer={reviewer}
+              onChange={reviewInputOnChangeHandler}
+              value={reviewer.first_name}
+            />
+            <ReviewInput
+              label={"Last Name"}
+              keyState={"last_name"}
+              reviewer={reviewer}
+              onChange={reviewInputOnChangeHandler}
+              value={reviewer.last_name}
+            />
+          </Box>
+
+          <Box
+            display={"flex"}
+            flexDirection={"row"}
+            alignItems={"center"}
+            width={"100%"}
+            marginBottom={2}
+            sx={{
+              "@media only screen and (max-width: 500px)": {
+                flexDirection: "column",
+                alignItems: "flex-start",
+              },
+            }}
+          >
+            <Typography sx={styles.ratingTitle}>Rating:</Typography>
             <Rating
               name="exercise rating"
               value={reviewer.rating}
@@ -103,23 +111,24 @@ const ReviewForm: ({ exerciseId }: { exerciseId: number }) => JSX.Element = ({
             />
           </Box>
 
-          <Button
-            size="small"
-            variant="contained"
-            sx={{
-              backgroundColor: "#F5CB5C",
-              fontSize: 10,
-              color: "#333533",
-              marginLeft: 4,
-              ":hover": {
-                backgroundColor: "#F5CB5C",
-                border: "1px solid black",
-              },
-            }}
-            onClick={reviewSubmit}
-          >
-            Submit
-          </Button>
+          <ReviewInput
+            label={"Comment"}
+            keyState={"comment"}
+            reviewer={reviewer}
+            onChange={reviewInputOnChangeHandler}
+            value={reviewer.comment}
+          />
+
+          <Box sx={styles.buttonContainer}>
+            <Button
+              size="small"
+              variant="contained"
+              sx={styles.submitButton}
+              onClick={reviewSubmit}
+            >
+              Submit
+            </Button>
+          </Box>
         </Box>
       </Box>
     </form>

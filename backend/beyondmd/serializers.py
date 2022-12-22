@@ -26,6 +26,12 @@ class ReviewerSerializer(serializers.ModelSerializer):
         return instance
 
 
+    @classmethod
+    def get_reviewers_from_exercise(cls, exercise_id):
+        exercise = Exercise.objects.get(id=exercise_id)
+        return Reviewer.objects.filter(exercise=exercise)
+
+
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
