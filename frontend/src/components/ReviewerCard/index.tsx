@@ -3,7 +3,13 @@ import React from "react";
 import { ReviewCardPropsType } from "./type";
 import styles from "./styles";
 
-const ReviewerCard = ({
+const ReviewerCard: ({
+  rating,
+  firstName,
+  lastName,
+  posted,
+  comment,
+}: ReviewCardPropsType) => JSX.Element = ({
   rating,
   firstName,
   lastName,
@@ -25,10 +31,10 @@ const ReviewerCard = ({
       hash = string.charCodeAt(i) + ((hash << 5) - hash);
     }
 
-    let color = "#";
+    let color: string = "#";
 
     for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
+      const value: number = (hash >> (i * 8)) & 0xff;
       color += `00${value.toString(16)}`.slice(-2);
     }
     /* eslint-enable no-bitwise */

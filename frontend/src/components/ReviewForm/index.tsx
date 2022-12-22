@@ -5,19 +5,20 @@ import axios, { AxiosResponse } from "axios";
 import ReviewInput from "../ReviewInput";
 import styles from "./styles";
 import { ExerciseReviewsTypes } from "../../screens/ExerciseScreen/type";
+import Alert from "@mui/material/Alert";
 
 const ReviewForm: ({
   exerciseId,
   addReviewOnSubmit,
 }: {
   exerciseId: number;
-  addReviewOnSubmit: (review: ExerciseReviewsTypes) => void;
+  addReviewOnSubmit: (review: ExerciseReviewsTypes, isSuccess: boolean) => void;
 }) => JSX.Element = ({
   exerciseId,
   addReviewOnSubmit,
 }: {
   exerciseId: number;
-  addReviewOnSubmit: (review: ExerciseReviewsTypes) => void;
+  addReviewOnSubmit: (review: ExerciseReviewsTypes, isSuccess: boolean) => void;
 }) => {
   const [reviewer, setReviewer] = React.useState<ReviewerPropsType>({
     first_name: "",
@@ -34,11 +35,9 @@ const ReviewForm: ({
         "reviewers/",
         reviewer
       );
-      if (response.status === 201) {
-        addReviewOnSubmit(response.data);
-      }
+      if (response.status === 201) addReviewOnSubmit(response.data, true);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setReviewer({
         first_name: "",
