@@ -7,9 +7,7 @@
 - [Overview](#overview)
     - [Features](#features)
     - [Demo](#demo)
-- [Want To Try Out The App?](#want-to-try-out-the-app)
-    - [Installation](#installation)
-    - [How to try out the app](#download-the-expo-app-from-the-app-store-and-login-with-the-following-credentials)
+- [Installation](#installation)
     - [Built with](#built-with)
     - [Deployment](#deployment)
     - [License](#license)
@@ -34,12 +32,7 @@ Users should be able to:
 
 Click on this [Link](https://youtu.be/U1g9HVUuSOo) to view a small demo of this app
 
-## Want To Try Out The App? 
-
-### Download the Expo App from the app store and login with the following credentials
-
-
-### Installation
+## Installation
 
 1. Get a free API Key from [API Ninjas](https://api-ninjas.com/api)
 2. Get a free API Key from [Unsplash](https://unsplash.com/)
@@ -77,8 +70,6 @@ Click on this [Link](https://youtu.be/U1g9HVUuSOo) to view a small demo of this 
 - Python
 - Django
 - PostgreSQL
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Deployment
 
