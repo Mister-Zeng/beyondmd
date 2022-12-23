@@ -4,8 +4,8 @@ from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 from .models import Exercise, Reviewer
 from .serializers import ReviewerSerializer, ExerciseSerializer
-import os
 import requests
+import os
 from dotenv import load_dotenv
 
 
@@ -22,6 +22,7 @@ def get_exercises(request):
 def save_exercise_from_api(request):
     load_dotenv()
     api_key = os.environ.get('API_KEY')
+    print(api_key)
     exercise_type = ['cardio', 'olympic_weightlifting', 'plyometrics', 'powerlifting', 'strength', 'stretching',
                      'strongman']
 
@@ -33,7 +34,7 @@ def save_exercise_from_api(request):
                                     headers={'X-Api-Key': api_key},
                                     params={'type': e, 'offset': offset})
             datas = response.json()
-            print(len(datas), e)
+
             if not datas:
                 # No more data, break out of the loop
                 break
