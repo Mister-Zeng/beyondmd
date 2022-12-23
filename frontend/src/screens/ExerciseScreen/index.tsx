@@ -32,6 +32,17 @@ const ExerciseScreen: FC = () => {
     setShowAlert(isSuccess);
   };
 
+  const popUpOnClose: (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => void = (event: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setShowAlert(false);
+  };
+
   const averageReview: () => number = () => {
     let total: number = 0;
     if (exerciseReviews) {
@@ -47,7 +58,7 @@ const ExerciseScreen: FC = () => {
     const getReviewFromExercise: () => Promise<void> = async () => {
       try {
         const response: AxiosResponse<any, any> = await axios.get(
-          `http://localhost:8000/exercise/${location.state.id}/reviews`
+          `/exercise/${location.state.id}/reviews`
         );
         const datas: ExerciseReviewsTypes[] = await response.data;
 
@@ -97,26 +108,10 @@ const ExerciseScreen: FC = () => {
       >
         <Snackbar
           open={showAlert}
-          autoHideDuration={6000}
-          onClose={(event: React.SyntheticEvent | Event, reason?: string) => {
-            if (reason === "clickaway") {
-              return;
-            }
-
-            setShowAlert(false);
-          }}
+          autoHideDuration={5000}
+          onClose={popUpOnClose}
         >
-          <Alert
-            onClose={(event: React.SyntheticEvent | Event, reason?: string) => {
-              if (reason === "clickaway") {
-                return;
-              }
-
-              setShowAlert(false);
-            }}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
+          <Alert onClose={popUpOnClose} severity="success">
             Review posted
           </Alert>
         </Snackbar>

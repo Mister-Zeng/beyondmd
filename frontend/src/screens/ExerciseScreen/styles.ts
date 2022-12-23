@@ -7,12 +7,26 @@ const styles = {
       marginLeft: 4,
     },
   },
-  averageRatingText: {},
+  averageRatingText: {
+    "@media only screen and (max-width: 375px)": {
+      fontSize: ".8rem",
+    },
+  },
   averageRating: {
     marginLeft: 6.5,
     marginRight: 2,
+    "@media only screen and (max-width: 375px)": {
+      marginLeft: 3.5,
+    },
   },
-  averageHeader: { marginLeft: 7, fontWeight: "bold", marginBottom: 2 },
+  averageHeader: {
+    marginLeft: 7,
+    fontWeight: "bold",
+    marginBottom: 2,
+    "@media only screen and (max-width: 375px)": {
+      marginLeft: 4,
+    },
+  },
   reviewContainer: {
     display: "flex",
     flexDirection: "row",

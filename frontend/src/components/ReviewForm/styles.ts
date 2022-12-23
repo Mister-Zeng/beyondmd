@@ -5,7 +5,6 @@ const styles = {
     justifyContent: "center",
     padding: 7,
     paddingTop: 0,
-
     "@media only screen and (max-width: 1160px)": {
       flexDirection: "column",
     },
@@ -24,15 +23,15 @@ const styles = {
     fontWeight: "bold",
     "@media only screen and (max-width: 500px)": {},
   },
-  buttonContainer: {
-    display: "flex",
-  },
   submitButton: {
     backgroundColor: "#F5CB5C",
-    fontSize: ".6rem",
+    fontSize: ".8rem",
     color: "#333533",
     ":hover": {
       backgroundColor: "#F5CB5C",
+    },
+    "@media only screen and (max-width: 750px)": {
+      fontSize: ".6rem",
     },
   },
   ratingTitle: {

@@ -41,8 +41,8 @@ export default function ExerciseTable({
   };
 
   return (
-    <Paper sx={{ width: "80%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 600 }}>
+    <Paper sx={{ width: "90%", overflow: "hidden" }}>
+      <TableContainer sx={{ maxHeight: 550 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>

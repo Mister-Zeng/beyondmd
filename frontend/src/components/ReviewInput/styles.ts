@@ -14,10 +14,12 @@ const styles = {
   },
   textInput: {
     input: {
+      width: "100%",
       color: "black",
-      fontSize: "1rem",
+      fontSize: ".8rem",
       height: 10,
       fontFamily: "arial",
+      padding: 1,
       "@media only screen and (max-width:750px)": {
         marginRight: 5,
       },
@@ -27,6 +29,7 @@ const styles = {
     },
   },
   textLabel: {
+    width: 80,
     fontFamily: "serif",
     marginRight: 3,
     "@media only screen and (max-width: 750px)": {
@@ -37,6 +40,7 @@ const styles = {
       fontSize: ".8rem",
     },
   },
+  commentTextInput: {},
 };
 
 export default styles;

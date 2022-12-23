@@ -5,7 +5,6 @@ import axios, { AxiosResponse } from "axios";
 import ReviewInput from "../ReviewInput";
 import styles from "./styles";
 import { ExerciseReviewsTypes } from "../../screens/ExerciseScreen/type";
-import Alert from "@mui/material/Alert";
 
 const ReviewForm: ({
   exerciseId,
@@ -32,7 +31,7 @@ const ReviewForm: ({
   const reviewSubmit: () => Promise<void> = async () => {
     try {
       const response: AxiosResponse<any, any> = await axios.post(
-        "reviewers/",
+        "/exercise/reviewers/",
         reviewer
       );
       if (response.status === 201) addReviewOnSubmit(response.data, true);
@@ -116,18 +115,17 @@ const ReviewForm: ({
             reviewer={reviewer}
             onChange={reviewInputOnChangeHandler}
             value={reviewer.comment}
+            isComment={true}
           />
 
-          <Box sx={styles.buttonContainer}>
-            <Button
-              size="small"
-              variant="contained"
-              sx={styles.submitButton}
-              onClick={reviewSubmit}
-            >
-              Submit
-            </Button>
-          </Box>
+          <Button
+            size="small"
+            variant="contained"
+            sx={styles.submitButton}
+            onClick={reviewSubmit}
+          >
+            Submit
+          </Button>
         </Box>
       </Box>
     </form>

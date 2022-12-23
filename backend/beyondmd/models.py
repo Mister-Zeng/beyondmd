@@ -26,7 +26,7 @@ class Reviewer(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     rating = models.IntegerField(choices=RATING_CHOICES)
-    comment = models.CharField(max_length=250)
+    comment = models.CharField(max_length=2000)
     posted = models.DateTimeField(default=timezone.now)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
 

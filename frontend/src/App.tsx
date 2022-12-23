@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     const fetchDataFromAPI: () => Promise<void> = async () => {
       try {
-        await axios.post("api/exercise");
+        await axios.post("/api/exercise");
       } catch (error) {
         console.error(error);
       }

@@ -19,38 +19,42 @@ const ResumeScreen: FC = () => {
       display={"flex"}
       alignItems={"center"}
       justifyContent={"center"}
-      sx={{ backgroundColor: !pdfDocument ? "lightgray" : "white" }}
+      sx={{
+        backgroundColor: "lightgray",
+        height: "100%",
+      }}
     >
       {!pdfDocument ? (
         <Box
+          height={"90vh"}
           display={"flex"}
           flexDirection={"column"}
           alignItems={"center"}
-          height={"90vh"}
           justifyContent={"center"}
         >
           <BallTriangle
-            height={100}
-            width={100}
+            height={50}
+            width={50}
             radius={5}
             color="gray"
             ariaLabel="ball-triangle-loading"
             visible={true}
           />
-          <Typography marginTop={2}>Loading...</Typography>
+          <Typography marginTop={2} fontSize={".9rem"}>
+            Loading...
+          </Typography>
         </Box>
       ) : (
         <Box sx={styles.container}>
           <Box sx={styles.downloadContainer}>
-            <Typography sx={styles.downloadTitle}>
-              Click Below To Download
-            </Typography>
+            <Typography sx={styles.downloadTitle}>Download Resume</Typography>
             <Button sx={styles.downloadButton}>
               <a href={Resume} download style={styles.downloadButtonText}>
                 <DownloadIcon />
               </a>
             </Button>
           </Box>
+
           <canvas ref={canvasRef} />
         </Box>
       )}

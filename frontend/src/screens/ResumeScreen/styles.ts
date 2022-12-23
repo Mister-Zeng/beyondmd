@@ -1,22 +1,13 @@
 const styles = {
   container: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
-    "@media only screen and (max-width: 950px)": {
-      flexDirection: "column",
-      alignItems: "center",
-    },
   },
   downloadContainer: {
     display: "flex",
     alignItems: "center",
-    flexDirection: "column",
-    marginTop: 6,
-    borderRadius: 10,
-    "@media only screen and (max-width: 950px)": {
-      marginTop: 0,
-    },
+    justifyContent: "center",
   },
   downloadTitle: { color: "#333533", fontFamily: "serif", padding: 2 },
   downloadButton: {

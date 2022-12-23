@@ -37,6 +37,7 @@ const styles = {
   footer: {
     position: "absolute",
     bottom: 0,
+    marginTop: 2,
     color: "white",
     flexDirection: "row",
     margin: 2,

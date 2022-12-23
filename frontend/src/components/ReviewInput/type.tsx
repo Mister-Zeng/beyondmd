@@ -16,6 +16,7 @@ type ReviewInputPropsType = {
     keyState: string,
     value: string
   ) => void;
+  isComment?: boolean;
 };
 
 export type { ReviewInputPropsType, ReviewerPropsType };
