@@ -40,7 +40,7 @@ Click on the thumbnail to watch the demo video:
 2. Get a free API Key from [Unsplash](https://unsplash.com/)
 3. Clone the repo
    ```sh
-   git clone https://github.com/Mister-Zeng/beyondmd.git
+   git clone https://github.com/Mister-Zeng/sweatcritique.git
    ```
 4. On the front end, install NPM packages
    ```sh
