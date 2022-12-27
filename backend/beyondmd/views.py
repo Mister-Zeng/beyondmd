@@ -22,7 +22,7 @@ def get_exercises(request):
 def save_exercise_from_api(request):
     load_dotenv()
     api_key = os.environ.get('API_KEY')
-    print(api_key)
+
     exercise_type = ['cardio', 'olympic_weightlifting', 'plyometrics', 'powerlifting', 'strength', 'stretching',
                      'strongman']
 

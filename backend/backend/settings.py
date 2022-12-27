@@ -13,8 +13,7 @@ SECRET_KEY = 'django-insecure-^s9!ctzl!@+-ef4m8#^=!c3lnme-ff%x-&=i24r!0g=wf$nu82
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['0.0.0.0', 'django']
 
 # Application definition
 
@@ -46,7 +45,7 @@ MIDDLEWARE = [
 
 
 # CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = ['http://frontend:3000']
+# CORS_ORIGIN_WHITELIST = ['http://0.0.0.0:3000', 'http://localhost:3000', 'http://backend:3000']
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -72,16 +71,27 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'rootpass',
+#         # Used in localhost in your local machine
+#         # 'HOST': 'localhost',
+#         'HOST': 'db',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'rootpass',
-        # Used in localhost in your local machine
-        # 'HOST': 'localhost',
+        'PASSWORD': 'postgres',
         'HOST': 'db',
-        'PORT': '5432',
+        'PORT': '',
     }
 }
 
