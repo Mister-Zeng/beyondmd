@@ -34,7 +34,7 @@ Click on the thumbnail to watch the demo video:
 [![Demo Video](https://img.youtube.com/vi/U1g9HVUuSOo/maxresdefault.jpg)](https://youtu.be/U1g9HVUuSOo)
 
 
-## Installation
+## Installation/Running on Docker
 
 1. Get a free API Key from [API Ninjas](https://api-ninjas.com/api)
 2. Get a free API Key from [Unsplash](https://unsplash.com/)
@@ -60,6 +60,9 @@ Click on the thumbnail to watch the demo video:
 7. Download and install [Docker](https://www.docker.com/)
 8. In the terminal of the root project folder, run this command
     ```sh
+   docker-compose build
+   ```
+     ```sh
    docker-compose up
    ```
    
