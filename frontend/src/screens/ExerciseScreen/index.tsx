@@ -77,8 +77,8 @@ const ExerciseScreen: FC = () => {
               Authorization: `Client-ID ${process.env.REACT_APP_UNSPLASH_ACCESS_KEY}`,
             },
             params: {
-              query:
-                location.state.exerciseName + " work out".replace("/", " "),
+              query: `${location.state.exerciseName} exercises`,
+              orientation: "landscape",
             },
           }
         );
