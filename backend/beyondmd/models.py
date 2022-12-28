@@ -2,15 +2,16 @@ from django.db import models
 from django.utils import timezone
 
 
-# Create your models here.
 class Exercise(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
     exercise_type = models.CharField(max_length=30)
     muscle = models.CharField(max_length=20)
     equipment = models.CharField(max_length=30)
     difficulty = models.CharField(max_length=20)
     instructions = models.TextField()
+
+    def __str__(self):
+        return self.name
 
 
 class Reviewer(models.Model):
@@ -22,7 +23,6 @@ class Reviewer(models.Model):
         (5, '5 stars'),
     )
 
-    id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     rating = models.IntegerField(choices=RATING_CHOICES)
@@ -30,3 +30,5 @@ class Reviewer(models.Model):
     posted = models.DateTimeField(default=timezone.now)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
