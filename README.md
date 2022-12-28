@@ -2,7 +2,7 @@
 
 # SweatCritique
 
-A web app that allows users to view, filter, and search a list of exercises, and add reviews on the selected exercise.
+A web app that fetch a list of exercises from API Ninja, a 3rd party API, and save it to the database if it does not exist. This app allows users to view, filter, and search a list of exercises, and add reviews on the selected exercise.
 
 
 ## Table of contents
@@ -74,6 +74,7 @@ Click on the thumbnail to watch the demo video:
 - Python
 - Django
 - PostgreSQL
+- Docker
 
 ## Deployment
 
@@ -90,4 +91,3 @@ Click on the thumbnail to watch the demo video:
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
