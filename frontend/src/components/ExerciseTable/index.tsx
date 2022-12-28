@@ -67,7 +67,7 @@ export default function ExerciseTable({
                     {columns.map((column) => {
                       const value: string =
                         column.id === "instructions"
-                          ? row[column.id].slice(0, 300) + " ...."
+                          ? `${row[column.id].slice(0, 300)} ....`
                           : row[column.id];
 
                       return (

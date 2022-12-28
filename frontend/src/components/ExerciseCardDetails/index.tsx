@@ -22,7 +22,7 @@ const ExerciseCardDetails: FC<ExerciseCardDetailsPropsType> = ({
           </Box>
 
           <Box sx={styles.exerciseTitleContainer}>
-            <Typography sx={styles.exerciseKeyText}>Exericse Type:</Typography>
+            <Typography sx={styles.exerciseKeyText}>Exercise Type:</Typography>
             <Typography sx={styles.exerciseValueText}>
               {exerciseType}
             </Typography>
@@ -36,7 +36,9 @@ const ExerciseCardDetails: FC<ExerciseCardDetailsPropsType> = ({
           </Box>
 
           <Box sx={styles.exerciseTitleContainer}>
-            <Typography sx={styles.exerciseKeyText}>Difficuly Type:</Typography>
+            <Typography sx={styles.exerciseKeyText}>
+              Difficult Level:
+            </Typography>
             <Typography sx={styles.exerciseValueText}>
               {difficultyLevel}
             </Typography>
