@@ -15,6 +15,10 @@ load_dotenv()
 api_key = os.environ.get('API_KEY')
 
 
+# Get_exercises: This request is a GET request that retrieves all exercises from the database. It first checks if the
+# exercises are cached, which means they have been stored in memory for quick access. If the exercises are not
+# cached, it fetches them from the database, caches them for future requests, and serializes them (converts them to
+# JSON). Finally, it returns the serialized data as a JSON response.
 @csrf_exempt
 @require_http_methods(["GET"])
 def get_exercises(request):
@@ -30,6 +34,12 @@ def get_exercises(request):
     return JsonResponse(serializer.data, safe=False)
 
 
+#  This request is a POST request that fetches exercises from an external API and saves them to the database.
+#  It loops through a list of exercise types and sends a GET request to the API with each type as a parameter.
+#  It then processes the response and checks if the exercise data already exists in the database.
+#  If it doesn't, it creates a new exercise record in the database. After all the data has been processed,
+#  it uses the bulk_create method to efficiently insert multiple records into the database.
+#  It then clears the cache to reflect the updated list of exercises and returns a success message to the user.
 @csrf_exempt
 @require_http_methods(["POST"])
 def save_exercise_from_api(request):
@@ -53,6 +63,7 @@ def save_exercise_from_api(request):
 
             for data in datas:
                 # Check if the data already exists in the database, if not create
+                # returns a tuple and a boolean indicating whether the object was created
                 exercise, created = Exercise.objects.get_or_create(
                     name=data.get("name", "default value"),
                     exercise_type=data.get("type", "default value"),
@@ -76,6 +87,8 @@ def save_exercise_from_api(request):
     return HttpResponse("Exercises fetched successfully")
 
 
+# This request is a GET request that retrieves all reviewers from the database and serializes them into JSON.
+# It returns the serialized data as a JSON response.
 @csrf_exempt
 @require_http_methods(['GET'])
 def get_reviews(request):
@@ -86,6 +99,9 @@ def get_reviews(request):
     return JsonResponse(serializer.data, safe=False)
 
 
+# This request is a GET request that retrieves all reviewers for a particular exercise from the database and
+# serializes them into JSON. It takes an exercise_id parameter and calls the get_reviewers_from_exercise method of
+# the ReviewerSerializer class to get the reviewers. It returns the serialized data as a JSON response.
 @csrf_exempt
 @require_http_methods(['GET'])
 def exercise_reviews(request, exercise_id):
@@ -94,6 +110,10 @@ def exercise_reviews(request, exercise_id):
     return JsonResponse(serializer.data, safe=False)
 
 
+#  This request is a POST request that saves a new review to the database.
+#  It parses the request data as JSON and passes it to the ReviewerSerializer class to create a new reviewer instance.
+#  If the serializer is valid, it saves the review to the database and returns a success message to the user.
+#  If the serializer is invalid, it returns an error message to the user.
 @csrf_exempt
 @require_http_methods(['POST'])
 def submit_review(request):
@@ -103,6 +123,3 @@ def submit_review(request):
         serializer.save()
         return JsonResponse(serializer.data, status=201)
     return JsonResponse(serializer.errors, status=400)
-
-
-

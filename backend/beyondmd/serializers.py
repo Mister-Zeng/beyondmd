@@ -8,6 +8,9 @@ class ReviewerSerializer(serializers.ModelSerializer):
         model = Reviewer
         fields = ['id', 'first_name', 'last_name', 'rating', 'comment', 'posted', 'exercise']
 
+    # This method takes an exercise_id argument and retrieves the Exercise object with that ID from the database. It
+    # then filters the Reviewer objects to return only those that have the specified Exercise object as the exercise
+    # field.
     @classmethod
     def get_reviewers_from_exercise(cls, exercise_id):
         exercise = Exercise.objects.get(id=exercise_id)
