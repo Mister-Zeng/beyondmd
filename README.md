@@ -73,11 +73,10 @@ Click on the thumbnail to watch the demo video:
 - Python
 - Django
 - PostgreSQL
-- Docker
 
 ## Deployment
 
-
+- Docker
 
 ## Author
 
