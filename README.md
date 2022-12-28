@@ -52,7 +52,6 @@ Click on the thumbnail to watch the demo video:
    ```
 6. On the back end root directory, create a file called `.env` and add your API Key from API Ninja
     ```bash 
-    ├── beyondmd
    ````
     ```js
     API_KEY = 'ENTER YOUR API';
