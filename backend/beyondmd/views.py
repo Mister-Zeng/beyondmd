@@ -15,7 +15,7 @@ load_dotenv()
 api_key = os.environ.get('API_KEY')
 
 
-# Get_exercises: This request is a GET request that retrieves all exercises from the database. It first checks if the
+# GET request that retrieves all exercises from the database. It first checks if the
 # exercises are cached, which means they have been stored in memory for quick access. If the exercises are not
 # cached, it fetches them from the database, caches them for future requests, and serializes them (converts them to
 # JSON). Finally, it returns the serialized data as a JSON response.
@@ -34,7 +34,7 @@ def get_exercises(request):
     return JsonResponse(serializer.data, safe=False)
 
 
-#  This request is a POST request that fetches exercises from an external API and saves them to the database.
+#  POST request that fetches exercises from an external API and saves them to the database.
 #  It loops through a list of exercise types and sends a GET request to the API with each type as a parameter.
 #  It then processes the response and checks if the exercise data already exists in the database.
 #  If it doesn't, it creates a new exercise record in the database. After all the data has been processed,
@@ -99,7 +99,7 @@ def get_reviews(request):
     return JsonResponse(serializer.data, safe=False)
 
 
-# This request is a GET request that retrieves all reviewers for a particular exercise from the database and
+# GET request that retrieves all reviewers for a particular exercise from the database and
 # serializes them into JSON. It takes an exercise_id parameter and calls the get_reviewers_from_exercise method of
 # the ReviewerSerializer class to get the reviewers. It returns the serialized data as a JSON response.
 @csrf_exempt
@@ -110,7 +110,7 @@ def exercise_reviews(request, exercise_id):
     return JsonResponse(serializer.data, safe=False)
 
 
-#  This request is a POST request that saves a new review to the database.
+#  POST request that saves a new review to the database.
 #  It parses the request data as JSON and passes it to the ReviewerSerializer class to create a new reviewer instance.
 #  If the serializer is valid, it saves the review to the database and returns a success message to the user.
 #  If the serializer is invalid, it returns an error message to the user.
