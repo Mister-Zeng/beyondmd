@@ -50,9 +50,7 @@ Click on the thumbnail to watch the demo video:
    ```js
    REACT_APP_UNSPLASH_ACCESS_KEY = 'ENTER YOUR API';
    ```
-6. On the back end root directory, create a file called `.env` and add your API Key from API Ninja
-    ```bash 
-   ````
+6. In the back end root directory, create a file called `.env` and add your API Key from API Ninja
     ```js
     API_KEY = 'ENTER YOUR API';
    ```
