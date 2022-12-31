@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import save_exercise_from_api, get_exercises, submit_review, exercise_reviews
+from .views import get_exercises, submit_review, exercise_reviews
 
 urlpatterns = [
-    path('api/exercise', save_exercise_from_api),
-    path('exercises/', get_exercises),
-    path('exercise/reviewers/', submit_review),
-    path('exercise/<int:exercise_id>/reviews', exercise_reviews, name='exercise_reviews')
+    path('exercise/', get_exercises),  # Retrieve all exercise
+
+    path('review/exercise/<int:exercise_id>', exercise_reviews),  # Get all reviews from a particular exercise
+    path('review/', submit_review),  # Submit a review
 ]

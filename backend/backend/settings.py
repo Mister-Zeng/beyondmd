@@ -15,6 +15,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['0.0.0.0', 'django']
 
+CORS_ORIGIN_WHITELIST = ['http://react:3000']
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -24,11 +26,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions', #Package to access abstract models
-    'django_filters', #Used with DRF
-    'rest_framework', #DRF package
+    'django_extensions',
+    'django_filters',
+    'rest_framework',
+    'django_crontab',
     "corsheaders",
-    'beyondmd'
+    'beyondmd.apps.BeyondmdConfig',
 ]
 
 MIDDLEWARE = [
@@ -40,12 +43,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
 ]
 
 
-# CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ORIGIN_WHITELIST = ['http://0.0.0.0:3000', 'http://localhost:3000', 'http://backend:3000']
+CRONJOBS = [
+  ('1 * * * *', 'beyondmd.cron.save_exercise_from_api', '>> /var/log/cron.log 2>&1')
+]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'exercise-list',
+    }
+}
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -76,10 +86,8 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'postgres',
 #         'USER': 'postgres',
-#         'PASSWORD': 'rootpass',
-#         # Used in localhost in your local machine
-#         # 'HOST': 'localhost',
-#         'HOST': 'db',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'localhost',
 #         'PORT': '5432',
 #     }
 # }
