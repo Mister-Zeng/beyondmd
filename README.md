@@ -8,13 +8,15 @@ A web app that fetch a list of exercises from API Ninja, a 3rd party API, and sa
 ## Table of contents
 
 - [Overview](#overview)
-    - [Features](#features)
-    - [Demo](#demo)
-- [Installation](#installation)
-    - [Built with](#built-with)
-    - [Deployment](#deployment)
-    - [License](#license)
+  - [Features](#features)
+  - [Demo](#demo)
+- [Cron](#feature--scheduled-tasks) 
+  - [Configuration](#cronjob-configuration)
+- [Installation](#installationrunning-on-docker)
+- [Built with](#built-with)
+  - [Deployment](#deployment)
 - [Author](#author)
+- [License](#license)
 
 
 ## Overview
