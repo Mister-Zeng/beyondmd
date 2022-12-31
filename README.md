@@ -42,20 +42,16 @@ Click on the thumbnail to watch the demo video:
    ```sh
    git clone https://github.com/Mister-Zeng/sweatcritique.git
    ```
-4. On the front end, install NPM packages
-   ```sh
-   npm install
-   ```
-5. In the root directory on the front end, create a file called `.env` and add your API Key from Unsplash
+4. In the root directory on the front end, create a file called `.env` and add your API Key from Unsplash
    ```js
    REACT_APP_UNSPLASH_ACCESS_KEY = 'ENTER YOUR API';
    ```
-6. In the back end root directory, create a file called `.env` and add your API Key from API Ninja
+5. In the back end root directory, create a file called `.env` and add your API Key from API Ninja
     ```js
     API_KEY = 'ENTER YOUR API';
    ```
-7. Download and install [Docker](https://www.docker.com/)
-8. In the terminal of the root project folder, run this command
+6. Download and install [Docker](https://www.docker.com/)
+7. In the terminal of the root project folder, run this command
     ```sh
    docker-compose build
    ```
@@ -98,6 +94,21 @@ The syntax for specifying the schedule in a cron job is as follows:
  * * * * * <command to execute>
 ```
 
+### Running Cron
+Inside the `Docker File` on the backend, these commands are executed after migration and right before running the server. 
+```sh 
+python manage.py crontab add && service cron start
+```
+
+This command add all the defined jobs from CRONJOBS to crontab
+```shell
+python manage.py crontab add
+```
+
+This command will start cron service and will execute all the defined scheduled jobs
+```shell
+service cron start
+```
 ## Built with
 
 - React
