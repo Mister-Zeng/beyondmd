@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_crontab',
     "corsheaders",
-    'beyondmd.apps.BeyondmdConfig',
+    'beyondmd',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +47,8 @@ MIDDLEWARE = [
 
 
 CRONJOBS = [
-  ('1 * * * *', 'beyondmd.cron.save_exercise_from_api', '>> /var/log/cron.log 2>&1')
+    ('1 0 * * *', 'beyondmd.cron.save_exercise_from_api'),
+    ('@reboot', 'beyondmd.cron.save_exercise_from_api')
 ]
 
 CACHES = {

@@ -62,7 +62,41 @@ Click on the thumbnail to watch the demo video:
      ```sh
    docker-compose up
    ```
-   
+
+## Feature: Scheduled Tasks
+
+### Cron
+In this project, I am utilizing cron to schedule the save_exercise_from_api method, 
+which fetches data from a third-party API and saves it to the database. 
+This method is scheduled to run upon server start and at 12:01am daily to consistently 
+update the database with any new data from the API.
+
+### Cronjob Configuration
+The tasks to be run on a schedule or on reboot are configured in the settings.py file.
+
+The following example shows how to schedule a task called save_exercise_from_api to run at 
+1 minute past midnight every day and on system reboot:
+
+```python
+CRONJOBS = [
+    ('1 0 * * *', 'beyondmd.cron.save_exercise_from_api'),
+    ('@reboot', 'beyondmd.cron.save_exercise_from_api')
+]
+```
+
+The syntax for specifying the schedule in a cron job is as follows:
+
+```
+ ┌───────────── minute (0 - 59)
+ │ ┌───────────── hour (0 - 23)
+ │ │ ┌───────────── day of the month (1 - 31)
+ │ │ │ ┌───────────── month (1 - 12)
+ │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday;
+ │ │ │ │ │                                   7 is also Sunday on some systems)
+ │ │ │ │ │
+ │ │ │ │ │
+ * * * * * <command to execute>
+```
 
 ## Built with
 

@@ -73,7 +73,7 @@ export default function ExerciseTable({
                       return (
                         <TableCell key={column.id} align={column.align}>
                           <Link
-                            to={`exercise/${row["name"]}`}
+                            to={`exercise/${row["id"]}`}
                             state={{
                               exerciseName: row["name"],
                               exerciseType: row["exercise_type"],

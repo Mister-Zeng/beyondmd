@@ -58,7 +58,7 @@ const ExerciseScreen: FC = () => {
     const getReviewFromExercise: () => Promise<void> = async () => {
       try {
         const response: AxiosResponse<any, any> = await axios.get(
-          `/exercise/${location.state.id}/reviews`
+          `/review/exercise/${location.state.id}`
         );
         const datas: ExerciseReviewsTypes[] = await response.data;
 

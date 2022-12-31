@@ -83,14 +83,14 @@ const MainScreen: FC = () => {
   useEffect(() => {
     const getExercises: () => Promise<void> = async () => {
       try {
-        const response: AxiosResponse<any, any> = await axios.get("exercises/");
+        const response: AxiosResponse<any, any> = await axios.get("exercise/");
 
         const data: ExerciseType[] = response.data;
 
         setExerciseList(data);
         setFilteredExerciseList(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
