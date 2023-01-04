@@ -3,7 +3,7 @@ type ExerciseCardDetailsPropsType = {
   exerciseName: string;
   exerciseType: string;
   muscleType: string;
-  difficultyLevel: string;
+  difficulty: string;
   instructions: string;
 };
 

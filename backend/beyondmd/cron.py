@@ -1,5 +1,6 @@
 from .models import Exercise
 from django.core.cache import cache
+import logging
 import requests
 import os
 from dotenv import load_dotenv
@@ -48,4 +49,4 @@ def save_exercise_from_api():
     # Clear the cache to reflect the updated list of exercises
     cache.delete('exercises')
     # Display a success message to the user
-    return HttpResponse("Exercises fetched successfully")
+    return logging.info("Exercises fetched successfully")

@@ -1,18 +1,30 @@
 import React, { FC, useEffect, useState } from "react";
 import ReviewForm from "../../components/ReviewForm";
 import { Box, Container, Rating, Typography } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ExerciseCardDetails from "../../components/ExerciseCardDetails";
 import axios, { AxiosResponse } from "axios";
 import ReviewerCard from "../../components/ReviewerCard";
-import { ExerciseReviewsTypes } from "./type";
+import { ExerciseReviewsTypes, ExerciseType } from "./type";
 import styles from "./styles";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-
+import CircularProgress from "@mui/material/CircularProgress";
 import { BallTriangle } from "react-loader-spinner";
+
 const ExerciseScreen: FC = () => {
-  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
+
+  let { id } = useParams();
+
+  const [exerciseInfo, setExerciseInfo] = useState<ExerciseType>({
+    name: "",
+    exercise_type: "",
+    muscle: "",
+    difficulty: "",
+    instructions: "",
+    id: 1,
+  });
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -55,10 +67,32 @@ const ExerciseScreen: FC = () => {
   };
 
   useEffect(() => {
+    const getExercise: () => Promise<void> = async () => {
+      try {
+        const response: AxiosResponse<any, any> = await axios.get(
+          `/exercise/${id}`
+        );
+
+        const datas: ExerciseType = await response.data;
+
+        setExerciseInfo({
+          name: datas.name,
+          exercise_type: datas.exercise_type,
+          muscle: datas.muscle,
+          difficulty: datas.difficulty,
+          instructions: datas.instructions,
+          id: datas.id,
+        });
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     const getReviewFromExercise: () => Promise<void> = async () => {
       try {
         const response: AxiosResponse<any, any> = await axios.get(
-          `/review/exercise/${location.state.id}`
+          `/review/exercise/${id}`
         );
         const datas: ExerciseReviewsTypes[] = await response.data;
 
@@ -77,7 +111,7 @@ const ExerciseScreen: FC = () => {
               Authorization: `Client-ID ${process.env.REACT_APP_UNSPLASH_ACCESS_KEY}`,
             },
             params: {
-              query: `${location.state.exerciseName} exercises`,
+              query: `${exerciseInfo.name} exercises`,
               orientation: "landscape",
             },
           }
@@ -92,112 +126,129 @@ const ExerciseScreen: FC = () => {
       }
     };
 
+    getExercise();
+
     getReviewFromExercise();
 
     getExercisePicture();
-  }, [location.state.exerciseName, location.state.id]);
+  }, [id, exerciseInfo.name]);
 
   return (
-    <React.Fragment>
-      <Container
-        disableGutters
-        maxWidth={false}
-        sx={{
-          backgroundColor: "#CFDBD5",
-        }}
-      >
-        <Snackbar
-          open={showAlert}
-          autoHideDuration={5000}
-          onClose={popUpOnClose}
+    <div>
+      {exerciseInfo && (
+        <Container
+          disableGutters
+          maxWidth={false}
+          sx={{
+            backgroundColor: "#CFDBD5",
+          }}
         >
-          <Alert onClose={popUpOnClose} severity="success">
-            Review posted
-          </Alert>
-        </Snackbar>
+          <Snackbar
+            open={showAlert}
+            autoHideDuration={5000}
+            onClose={popUpOnClose}
+          >
+            <Alert onClose={popUpOnClose} severity="success">
+              Review posted
+            </Alert>
+          </Snackbar>
 
-        {!isImageLoaded ? (
-          <Box sx={styles.spinner}>
-            <BallTriangle
-              height={50}
-              width={30}
-              radius={5}
-              color="gray"
-              ariaLabel="ball-triangle-loading"
-              visible={true}
+          {!isImageLoaded ? (
+            <Box sx={styles.spinner}>
+              <BallTriangle
+                height={50}
+                width={30}
+                radius={5}
+                color="gray"
+                ariaLabel="ball-triangle-loading"
+                visible={true}
+              />
+              <Typography fontSize={10}>Loading...</Typography>
+            </Box>
+          ) : (
+            <Box
+              component="img"
+              sx={styles.exerciseImage}
+              alt="Exercise Picture"
+              src={exerciseImage}
             />
-            <Typography fontSize={10}>Loading...</Typography>
-          </Box>
-        ) : (
-          <Box
-            component="img"
-            sx={styles.exerciseImage}
-            alt="Exercise Picture"
-            src={exerciseImage}
-          />
-        )}
+          )}
 
-        <ExerciseCardDetails
-          exerciseName={location.state.exerciseName}
-          exerciseType={location.state.exerciseType}
-          muscleType={location.state.muscleType}
-          difficultyLevel={location.state.difficultyLevel}
-          instructions={location.state.instructions}
-          id={location.state.id}
-        />
+          {exerciseInfo && (
+            <ExerciseCardDetails
+              exerciseName={exerciseInfo.name}
+              exerciseType={exerciseInfo.exercise_type}
+              muscleType={exerciseInfo.muscle}
+              difficulty={exerciseInfo.difficulty}
+              instructions={exerciseInfo.instructions}
+              id={exerciseInfo.id}
+            />
+          )}
 
-        <Box sx={styles.reviewContainer}>
-          <Box>
-            <Box marginBottom={4}>
-              <Typography sx={styles.averageHeader}>Average Reviews</Typography>
-
-              <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-                <Rating
-                  name="average exercise rating"
-                  readOnly
-                  value={averageReview()}
-                  precision={0.1}
-                  sx={styles.averageRating}
-                  size="medium"
-                />
-
-                <Typography sx={styles.averageRatingText}>
-                  {exerciseReviews.length !== 0
-                    ? averageReview() + " out of 5"
-                    : "No Reviews Yet"}
+          <Box sx={styles.reviewContainer}>
+            <Box>
+              <Box marginBottom={4}>
+                <Typography sx={styles.averageHeader}>
+                  Average Reviews
                 </Typography>
+
+                <Box
+                  display={"flex"}
+                  flexDirection={"row"}
+                  alignItems={"center"}
+                >
+                  <Rating
+                    name="average exercise rating"
+                    readOnly
+                    value={averageReview()}
+                    precision={0.1}
+                    sx={styles.averageRating}
+                    size="medium"
+                  />
+
+                  <Typography sx={styles.averageRatingText}>
+                    {exerciseReviews.length !== 0
+                      ? averageReview() + " out of 5"
+                      : "No Reviews Yet"}
+                  </Typography>
+                </Box>
               </Box>
+
+              <ReviewForm
+                exerciseId={exerciseInfo.id}
+                addReviewOnSubmit={addReviewOnSubmit}
+              />
             </Box>
 
-            <ReviewForm
-              exerciseId={location.state.id}
-              addReviewOnSubmit={addReviewOnSubmit}
-            />
-          </Box>
+            <Box sx={styles.reviewList}>
+              <Typography sx={styles.header}>Recent Reviews</Typography>
 
-          <Box sx={styles.reviewList}>
-            <Typography sx={styles.header}>Recent Reviews</Typography>
-
-            {exerciseReviews ? (
-              exerciseReviews.map((review) => {
-                return (
-                  <ReviewerCard
-                    key={review.id}
-                    rating={review.rating}
-                    firstName={review.first_name}
-                    lastName={review.last_name}
-                    posted={review.posted}
-                    comment={review.comment}
-                  />
-                );
-              })
-            ) : (
-              <p>No reviews yet</p>
-            )}
+              {exerciseReviews ? (
+                exerciseReviews.map((review) => {
+                  return (
+                    <ReviewerCard
+                      key={review.id}
+                      rating={review.rating}
+                      firstName={review.first_name}
+                      lastName={review.last_name}
+                      posted={review.posted}
+                      comment={review.comment}
+                    />
+                  );
+                })
+              ) : (
+                <p>No reviews yet</p>
+              )}
+            </Box>
           </Box>
+        </Container>
+      )}
+      {isLoading && (
+        <Box sx={{ position: "absolute", top: "50%", left: "48%" }}>
+          <CircularProgress />
         </Box>
-      </Container>
-    </React.Fragment>
+      )}
+    </div>
   );
 };
 

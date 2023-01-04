@@ -7,4 +7,13 @@ type ExerciseReviewsTypes = {
   posted: string;
 };
 
-export type { ExerciseReviewsTypes };
+type ExerciseType = {
+  id: number;
+  name: string;
+  exercise_type: string;
+  muscle: string;
+  difficulty: string;
+  instructions: string;
+};
+
+export type { ExerciseReviewsTypes, ExerciseType };

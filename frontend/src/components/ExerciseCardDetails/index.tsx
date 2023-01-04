@@ -7,7 +7,7 @@ const ExerciseCardDetails: FC<ExerciseCardDetailsPropsType> = ({
   exerciseName,
   exerciseType,
   muscleType,
-  difficultyLevel,
+  difficulty,
   instructions,
 }: ExerciseCardDetailsPropsType) => {
   return (
@@ -39,9 +39,7 @@ const ExerciseCardDetails: FC<ExerciseCardDetailsPropsType> = ({
             <Typography sx={styles.exerciseKeyText}>
               Difficult Level:
             </Typography>
-            <Typography sx={styles.exerciseValueText}>
-              {difficultyLevel}
-            </Typography>
+            <Typography sx={styles.exerciseValueText}>{difficulty}</Typography>
           </Box>
         </Box>
       </Box>

@@ -7,6 +7,8 @@ from .serializers import ReviewerSerializer, ExerciseSerializer
 from django.core.cache import cache
 
 
+# The @csrf_exempt decorator disables the Cross-Site Request Forgery (CSRF) protection for this view.
+
 # GET request that retrieves all exercises from the database. It first checks if the
 # exercises are cached, which means they have been stored in memory for quick access. If the exercises are not
 # cached, it fetches them from the database, caches them for future requests, and serializes them (converts them to
@@ -27,7 +29,22 @@ def get_exercises(request):
         return JsonResponse(serializer.data, safe=False, status=200)
     except Exercise.DoesNotExist:
         # Return a 404 Not Found status code if the requested exercise does not exist
-        return JsonResponse(serializer.errors, status=400)
+        return JsonResponse(serializer.errors, status=404)
+
+
+# GET request that retrieve an exercise object with the given primary key from the database using the Exercise model
+# If the exercise object is found, it creates a serialized representation of the object using the ExerciseSerializer
+# class and returns it as a JSON response with a status code of 200 (success). If the exercise object is not found,
+# it returns a JSON response with an error message and a status code of 404 (not found).
+@csrf_exempt
+@require_http_methods(["GET"])
+def get_exercise_by_id(request, pk):
+    try:
+        exercise = Exercise.objects.get(pk=pk)
+        serializer = ExerciseSerializer(exercise)
+        return JsonResponse(serializer.data, status=200)
+    except Exercise.DoesNotExist:
+        return JsonResponse({'error': 'Exercise with id "{}" does not exist'.format(pk)}, status=404)
 
 
 # GET request that retrieves all reviewers for a particular exercise from the database and
@@ -42,7 +59,7 @@ def exercise_reviews(request, exercise_id):
         return JsonResponse(serializer.data, safe=False, status=200)
     except Exercise.DoesNotExist:
         # Return a 404 Not Found status code if the requested exercise does not exist
-        return JsonResponse(serializer.errors, status=400)
+        return JsonResponse(serializer.errors, status=404)
 
 
 #  POST request that saves a new review to the database.
@@ -58,4 +75,3 @@ def submit_review(request):
         serializer.save()
         return JsonResponse(serializer.data, status=201)
     return JsonResponse(serializer.errors, status=400)
-

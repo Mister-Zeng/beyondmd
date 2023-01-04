@@ -8,12 +8,16 @@ import ResumeScreen from "./screens/ResumeScreen";
 function App() {
   return (
     <React.Fragment>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<MainScreen />} />
-        <Route path="resume" element={<ResumeScreen />} />
-        <Route path="exercise/:id" element={<ExerciseScreen />} />
-      </Routes>
+      <header>
+        <NavBar />
+      </header>
+      <main>
+        <Routes>
+          <Route path="/" element={<MainScreen />} />
+          <Route path="resume" element={<ResumeScreen />} />
+          <Route path="exercise/:id" element={<ExerciseScreen />} />
+        </Routes>
+      </main>
     </React.Fragment>
   );
 }

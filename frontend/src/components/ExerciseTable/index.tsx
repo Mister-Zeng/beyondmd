@@ -74,14 +74,6 @@ export default function ExerciseTable({
                         <TableCell key={column.id} align={column.align}>
                           <Link
                             to={`exercise/${row["id"]}`}
-                            state={{
-                              exerciseName: row["name"],
-                              exerciseType: row["exercise_type"],
-                              muscleType: row["muscle"],
-                              difficultyLevel: row["difficulty"],
-                              instructions: row["instructions"],
-                              id: row["id"],
-                            }}
                             style={{
                               textDecoration: "none",
                               color: "black",
