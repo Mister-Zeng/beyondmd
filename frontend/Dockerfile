@@ -1,8 +1,8 @@
-FROM node:14.15.0-alpine
+FROM node:latest
 
 WORKDIR /app
 
-COPY frontend/package.json .
+COPY frontend/package.json frontend/package-lock.json ./
 
 RUN npm install
 
